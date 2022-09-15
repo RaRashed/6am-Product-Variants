@@ -29,7 +29,7 @@ class HomeController extends Controller
 
     {
 
-        return view('admin.index');
+        return view('admin.mindex');
 
     }
 

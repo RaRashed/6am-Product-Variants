@@ -3,6 +3,7 @@
 
     <!--BASIC css-->
     <!-- ========================================================= -->
+
     <link rel="stylesheet" href="{{asset('assets/vendor/bootstrap/css/bootstrap.css')}}">
     <link rel="stylesheet" href="{{asset('assets/vendor/font-awesome/css/font-awesome.css')}}">
     <link rel="stylesheet" href="{{asset('assets/vendor/animate.css/animate.css')}}">
@@ -18,3 +19,5 @@
 
     <link rel="stylesheet" href="{{asset('assets/vendor/data-table/media/css/dataTables.bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/css.css')}}">
+
+

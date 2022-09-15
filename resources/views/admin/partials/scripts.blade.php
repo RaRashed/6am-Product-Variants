@@ -3,9 +3,10 @@
     <!-- ========================================================= -->
     @push('scripts')
 
-  
+
 
     <script src="{{asset('assets/vendor/jquery/jquery-1.12.3.min.js')}}"></script>
+
     <script src="{{asset('assets/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('assets/vendor/nano-scroller/nano-scroller.js')}}"></script>
     <!--TEMPLATE scripts-->
@@ -32,15 +33,17 @@
        <script src="{{asset('assets/js/custom.js')}}"></script>
          <script src="{{asset('assets/js/portal.js')}}"></script>
 
-     
+
 
           <script type="text/javascript">
         $(document).ready(function(){
             $('#basic-table').dataTable();
 
         });
-          
+
     </script>
+
+
 
 <!--    <script type="text/javascript">
     function open_container2(id)
@@ -53,7 +56,7 @@
             success: function(data){
                 if(data.success)
                 {
-                   
+
                     $('#name').html(data.data.name);
                     $('#email').html(data.data.email);
                     $('#mobile_no').html(data.data.mobile_no);
@@ -71,5 +74,5 @@
 
 
     @endpush
-  
+
     @stack('scripts')

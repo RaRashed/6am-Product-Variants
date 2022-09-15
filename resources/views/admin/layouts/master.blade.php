@@ -12,6 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>6am Ecommerce</title>
     @include('admin.partials.styles')
+@yield('styles')
 
 
 
@@ -38,6 +39,7 @@
 
 
   	@include('admin.partials.scripts')
+@yield('scripts')
 </body>
 
 
