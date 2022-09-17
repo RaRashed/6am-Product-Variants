@@ -13,7 +13,8 @@
     <!-- Custom js for this page -->
     <script src="{{ asset('massets/js/dashboard.js') }}"></script>
     <!-- End custom js for this page -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
 
 <script src="https://cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.min.js"></script>
 

@@ -62,6 +62,7 @@ Route::resource('category', CategoryController::class);
 Route::resource('brand',BrandController::class);
 Route::resource('product',ProductController::class);
 Route::resource('coupon',CouponContoller::class);
+Route::get('admin/product/sku-combination',[ProductController::class,'sku_combination']);
 
 
 Route::delete('image/{img_id}/delete',[ImageController::class,'Imagedestroy'])->name('destroyimage');
@@ -79,3 +80,6 @@ Route::get('checkout', [FrontendController::class,'checkout'])->name('checkout')
 
 Route::post('update-cart', [FrontendController::class,'update']);
 Route::post('remove-from-cart', [FrontendController::class, 'remove']);
+
+
+
