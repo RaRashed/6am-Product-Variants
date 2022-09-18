@@ -24,7 +24,6 @@
       $sku = '';
       foreach (explode(' ', $product_name) as $key => $value) {
         $sku .= substr($value, 0, 1);
-        print_r($sku);
       }
 
       $str = '';
@@ -68,33 +67,33 @@
 </table>
 
 <script>
-   update_qty();
-   function update_qty()
-   {
-      var total_qty = 0;
-      var qty_elements = $('input[name^="qty_"]');
-      for(var i=0; i<qty_elements.length; i++)
-      {
-         total_qty += parseInt(qty_elements.eq(i).val());
-      }
-      if(qty_elements.length > 0)
-      {
+//    update_qty();
+//    function update_qty()
+//    {
+//       var total_qty = 0;
+//       var qty_elements = $('input[name^="qty_"]');
+//       for(var i=0; i<qty_elements.length; i++)
+//       {
+//          total_qty += parseInt(qty_elements.eq(i).val());
+//       }
+//       if(qty_elements.length > 0)
+//       {
 
-         $('input[name="current_stock"]').attr("readonly", true);
-         $('input[name="current_stock"]').val(total_qty);
-      }
-      else{
-         $('input[name="current_stock"]').attr("readonly", false);
-      }
-   }
-   $('input[name^="qty_"]').on('keyup', function () {
-      var total_qty = 0;
-      var qty_elements = $('input[name^="qty_"]');
-      for(var i=0; i<qty_elements.length; i++)
-      {
-         total_qty += parseInt(qty_elements.eq(i).val());
-      }
-      $('input[name="current_stock"]').val(total_qty);
-   });
+//          $('input[name="current_stock"]').attr("readonly", true);
+//          $('input[name="current_stock"]').val(total_qty);
+//       }
+//       else{
+//          $('input[name="current_stock"]').attr("readonly", false);
+//       }
+//    }
+//    $('input[name^="qty_"]').on('keyup', function () {
+//       var total_qty = 0;
+//       var qty_elements = $('input[name^="qty_"]');
+//       for(var i=0; i<qty_elements.length; i++)
+//       {
+//          total_qty += parseInt(qty_elements.eq(i).val());
+//       }
+//       $('input[name="current_stock"]').val(total_qty);
+//    });
 
 </script>

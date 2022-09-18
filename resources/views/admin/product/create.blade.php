@@ -160,12 +160,12 @@
                     <input type="number" name="unit-price" placeholder="Enter Product Price" class="form-control" required>
                 </div>
               </div>
-              <div class="form-group row" id="quantity">
+              {{-- <div class="form-group row" id="quantity">
                 <label for="exampleInputConfirmPassword2" class="col-sm-3 col-form-label">Quantity</label>
                 <div class="col-sm-9">
                     <input type="number" min="0" value="0" step="1" placeholder="Quantity" name="current_stock" class="form-control" required>
                 </div>
-              </div>
+              </div> --}}
               <div class="form-group row">
                 <label for="exampleInputConfirmPassword2" class="col-sm-3 col-form-label">Product Images</label>
                 <div class="col-sm-9">
@@ -283,16 +283,12 @@ $('#choice_attributes').on('change', function() {
         });
 
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: "{{route('sku.combination')}}",
             data: $('#product_form').serialize(),
             success: function(data) {
             $('#sku_combination').html(data.view);
-            if (data.length > 1) {
-                        $('#quantity').hide();
-                    } else {
-                        $('#quantity').show();
-                    }
+
 
             }
         });

@@ -288,15 +288,88 @@ class ProductController extends Controller
             foreach ($request->choice_no as $key => $no) {
                 $name = 'choice_options_' . $no;
                 $my_str = implode('', $request[$name]);
+
+                array_push($options, explode(',', $my_str));
+            }
+        }
+
+        $combinations = [[]];
+
+        foreach ($options as $property => $property_values) {
+            $tmp = [];
+            foreach ($combinations as $combinations_item) {
+                foreach ($property_values as $property_value) {
+                    $tmp[] = array_merge($combinations_item, [$property => $property_value]);
+                }
+            }
+            $combinations = $tmp;
+
+        }
+
+
+
+       //$products =DB::table('colors')->get()->all();
+       //dd($products);
+        return response()->json([
+            'view' => view('admin.mpartials.sku_combination', compact('combinations','options','product_name', 'unit_price', 'colors_active'))->render(),
+
+        ]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function combination(Request $request)
+    {
+//        return $request;
+        $options = [];
+        if ($request->has('colors_active') && $request->has('colors') && count($request->colors) > 0) {
+            $colors_active = 1;
+            array_push($options, $request->colors);
+        } else {
+            $colors_active = 0;
+        }
+
+        $unit_price = $request->unit_price;
+       //$product_name = $request->name[array_search('en', $request->lang)];
+         $product_name = $request->name;
+        if ($request->has('choice_no')) {
+            foreach ($request->choice_no as $key => $no) {
+                $name = 'choice_options_' . $no;
+                $my_str = implode('', $request[$name]);
+
                 array_push($options, explode(',', $my_str));
             }
         }
 
        $combinations =combinations($options);
-       //$products =DB::table('colors')->get()->all();
+       $products =DB::table('colors')->get()->all();
        //dd($products);
         return response()->json([
-            'view' => view('admin.mpartials.sku_combination', compact('combinations','product_name', 'unit_price', 'colors_active'))->render(),
+            $options
+
         ]);
     }
 }
