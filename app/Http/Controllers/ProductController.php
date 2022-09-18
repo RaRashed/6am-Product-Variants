@@ -36,6 +36,7 @@ class ProductController extends Controller
         $categories = $this->category::all();
        // $products=Product::all();
        $products = $this->product::all();
+       //dd($products);
         return view('admin.product.index',['categories'=>$categories,'products'=>$products]);
     }
 
@@ -281,8 +282,8 @@ class ProductController extends Controller
         }
 
         $unit_price = $request->unit_price;
-        //$product_name = $request->name[array_search('en', $request->lang)];
-
+       //$product_name = $request->name[array_search('en', $request->lang)];
+         $product_name = $request->name;
         if ($request->has('choice_no')) {
             foreach ($request->choice_no as $key => $no) {
                 $name = 'choice_options_' . $no;
@@ -292,8 +293,10 @@ class ProductController extends Controller
         }
 
        $combinations =combinations($options);
+       //$products =DB::table('colors')->get()->all();
+       //dd($products);
         return response()->json([
-            'view' => view('admin.mpartials.sku_combination', compact('combinations', 'unit_price', 'colors_active'))->render(),
+            'view' => view('admin.mpartials.sku_combination', compact('combinations','product_name', 'unit_price', 'colors_active'))->render(),
         ]);
     }
 }

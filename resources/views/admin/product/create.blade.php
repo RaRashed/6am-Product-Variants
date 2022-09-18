@@ -44,8 +44,9 @@
                 @csrf
               <div class="form-group row">
                 <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Product Name</label>
+
                 <div class="col-sm-9">
-                    <input type="text" name="name[]" placeholder="Enter category name" class="form-control" required>
+                    <input type="text" name="name" placeholder="Enter category name" class="form-control" required>
                 </div>
               </div>
               <div class="form-group row">
@@ -60,7 +61,7 @@
                        </select>
                 </div>
               </div>
-              <div class="form-group row">form-control
+              <div class="form-group row">
                 <label for="exampleInputMobile" class="col-sm-3 col-form-label">Brand</label>
                 <div class="col-sm-9">
                     <select name="brand_id" class="form-control">
@@ -139,42 +140,6 @@
 
 
               <div class="pt-4 col-12 sku_combination" id="sku_combination">
-{{--
-              <table class="table table-bordered" id="myTable">
-                  <thead>
-                    <tr>
-                      <td class="text-center">
-                        <label for="" class="control-label">Variant</label>
-                      </td>
-                      <td class="text-center">
-                        <label for="" class="control-label">Variant Price</label>
-                      </td>
-                      <td class="text-center">
-                        <label for="" class="control-label">SKU</label>
-                      </td>
-                      <td class="text-center">
-                        <label for="" class="control-label">Quantity</label>
-                      </td>
-                    </tr>
-                  </thead>
-                  <tbody>
-
-                      <tr>
-                      <td>
-                        <label for="" class="control-label"></label>
-                      </td>
-                      <td>
-                        <input type="number" name="price_asdfg" value="" min="0" step="0.01" class="form-control" required="">
-                      </td>
-                      <td>
-                        <input type="text" name="sku_asdfg" value="-asdfg" class="form-control" required="">
-                      </td>
-                      <td>
-                        <input type="number" name="qty_asdfg" value="1" min="1" max="1000000" step="1" class="form-control" required="">
-                      </td>
-                    </tr>
-                  </tbody>
-                </table> --}}
               </div>
 
 
@@ -192,13 +157,13 @@
                 <label for="exampleInputConfirmPassword2" class="col-sm-3 col-form-label">Price</label>
                 <div class="col-sm-9">
 
-                    <input type="number" name="price" placeholder="Enter Product Quantity" class="form-control" required>
+                    <input type="number" name="unit-price" placeholder="Enter Product Price" class="form-control" required>
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="form-group row" id="quantity">
                 <label for="exampleInputConfirmPassword2" class="col-sm-3 col-form-label">Quantity</label>
                 <div class="col-sm-9">
-                    <input type="number" name="quantity" placeholder="Enter Product Quantity" class="form-control" required>
+                    <input type="number" min="0" value="0" step="1" placeholder="Quantity" name="current_stock" class="form-control" required>
                 </div>
               </div>
               <div class="form-group row">
@@ -214,10 +179,7 @@
 
 
 
-              <div class="form-check form-check-flat form-check-primary">
-                <label class="form-check-label">
-                  <input type="checkbox" class="form-check-input"> Remember me </label>
-              </div>
+
               <button type="submit" class="btn btn-primary mr-2">Submit</button>
               <button class="btn btn-light">Cancel</button>
             </form>
@@ -279,85 +241,9 @@ else{
     $("#colors-selector").attr('disabled','true');
 }
 });
-$('#choice_attributes').on('change', function() {
-            $('#customer_choice_options').html(null);
-            $.each($("#choice_attributes option:selected"), function() {
-                //console.log($(this).val());
-                add_more_customer_choice_option($(this).val(), $(this).text());
-            });
-        });
-/*
- $('#colors-selector').on('change', function() {
-            $('#sku_combination').html(null);
-            $.each($("#colors-selector option:selected"), function() {
-                //console.log($(this).val());
-                add_more_sku_combination($(this).val(), $(this).text());
-            });
-        });
-*/
-        function add_more_customer_choice_option(i, name) {
-            let n = name.split(' ').join('');
-            $('#customer_choice_options').append(
-                ' <div class="form-group row"> <div class="col-sm-3"><input type="hidden" name="choice_no[]" value="' + i +
-                '"><input type="text" class="form-control" name="choice[]" value="' + n +
-                '" placeholder="Choice Title" readonly></div><div class="col-lg-9"><input type="text" class="form-control" name="choice_options_' +
-                i +
-                '[]" placeholder="Enter choice values"  data-role="tagsinput" onchange="update_sku()"></div></div>'
-                );
-
-            $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput();
-        }
-/*
-  function add_more_sku_combination(j, value) {
-            let n = name.split(' ').join('');
-            $('#sku_combination').append(`
-
-            <table class="table table-bordered">
-                  <thead>
-                    <tr>
-                      <td class="text-center">
-                        <label for="" class="control-label">Variant</label>
-                      </td>
-                      <td class="text-center">
-                        <label for="" class="control-label">Variant Price</label>
-                      </td>
-                      <td class="text-center">
-                        <label for="" class="control-label">SKU</label>
-                      </td>
-                      <td class="text-center">
-                        <label for="" class="control-label">Quantity</label>
-                      </td>
-                    </tr>
-                  </thead>
-                  <tbody>
-
-                      <tr>
-                      <td>
-                        <label for="" class="control-label"></label>
-                        <input type="hidden" name="choice_no[]" value="${j}">
-                        <input type="text" class="form-control" name="choice[]" value="${value}" placeholder="Color" readonly>
-                      </td>
-                      <td>
-                        <input type="number" name="price" value="" min="0" step="0.01" class="form-control" required="">
-                      </td>
-                      <td>
-                        <input type="text" name="sku" value="${value}_${j}" class="form-control" required="">
-                      </td>
-                      <td>
-                        <input type="number" name="price" value="1" min="1" max="1000000" step="1" class="form-control" required="">
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                `);
-
-        }
-*/
 
 
-
-
-        $('#colors-selecto').on('change', function() {
+$('#colors-selector').on('change', function() {
             update_sku();
         });
 
@@ -365,110 +251,53 @@ $('#choice_attributes').on('change', function() {
             update_sku();
         });
 
-        function update_sku() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
+$('#choice_attributes').on('change', function() {
+            $('#customer_choice_options').html(null);
+            $.each($("#choice_attributes option:selected"), function() {
+                //console.log($(this).val());
+                add_more_customer_choice_option($(this).val(), $(this).text());
             });
+        });
 
-            $.ajax({
-              url: '{{ url('admin/product/sku-combination') }}',
-               method: "post",
-                data: $('#product_form').serialize(),
-                success: function(data) {
-                    $('#sku_combination').html(data.view);
-                    if (data.length > 1) {
+        function add_more_customer_choice_option(i, name) {
+            let n = name.split(' ').join('');
+            $('#customer_choice_options').append(
+                ' <div class="form-group row"> <div class="col-sm-3"><input type="hidden" name="choice_no[]" value="' + i +
+                '"><input type="text" class="form-control" name="choice[]" value="' + n +
+                '" placeholder="Choice Title" readonly></div><div class="col-lg-9"><input type="text" class="form-control" name="choice_options_' +
+                i +
+               '[]" placeholder="Enter choice values"  data-role="tagsinput" onchange="update_sku()"></div></div>'
+
+                );
+
+            $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput();
+        }
+        </script>
+
+       <script>
+        function update_sku() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "{{route('sku.combination')}}",
+            data: $('#product_form').serialize(),
+            success: function(data) {
+            $('#sku_combination').html(data.view);
+            if (data.length > 1) {
                         $('#quantity').hide();
                     } else {
                         $('#quantity').show();
                     }
-                }
-            });
-        }
+
+            }
+        });
+    }
 </script>
-<script>
-        function check() {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: '',
-                type: 'warning',
-                showCancelButton: true,
-                cancelButtonColor: 'default',
-                confirmButtonColor: '#377dff',
-                cancelButtonText: 'No',
-                confirmButtonText: 'Yes',
-                reverseButtons: true
-            }).then((result) => {
-                for (instance in CKEDITOR.instances) {
-                    CKEDITOR.instances[instance].updateElement();
-                }
-                var formData = new FormData(document.getElementById('product_form'));
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.post({
-                    url: 'https://6valley.6amtech.com/admin/product/store',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(data) {
-                        // console.log(data.errors);
-                        // return false;
-                        if (data.errors) {
-                            for (var i = 0; i < data.errors.length; i++) {
-                                toastr.error(data.errors[i].message, {
-                                    CloseButton: true,
-                                    ProgressBar: true
-                                });
-                            }
-                        } else {
-                            toastr.success(
-                            'Product added successfully!', {
-                                CloseButton: true,
-                                ProgressBar: true
-                            });
-                            $('#product_form').submit();
-                        }
-                    }
-                });
-            })
-        };
-    </script>
-
-{{--   <script>
-                update_qty();
-                function update_qty()
-                {
-                  var total_qty = 0;
-                  var qty_elements = $('input[name^="qty_"]');
-                  for(var i=0; i<qty_elements.length; i++)
-                  {
-                    total_qty += parseInt(qty_elements.eq(i).val());
-                  }
-                  if(qty_elements.length > 0)
-                  {
-
-                    $('input[name="current_stock"]').attr("readonly", true);
-                    $('input[name="current_stock"]').val(total_qty);
-                  }
-                  else{
-                    $('input[name="current_stock"]').attr("readonly", false);
-                  }
-                }
-                $('input[name^="qty_"]').on('keyup', function () {
-                  var total_qty = 0;
-                  var qty_elements = $('input[name^="qty_"]');
-                  for(var i=0; i<qty_elements.length; i++)
-                  {
-                    total_qty += parseInt(qty_elements.eq(i).val());
-                  }
-                  $('input[name="current_stock"]').val(total_qty);
-                });
-
-              </script> --}}
 
 
 @endsection

@@ -30,6 +30,7 @@
           <div class="d-sm-flex align-items-center mb-4">
             <h4 class="card-title mb-sm-0">Brand</h4>
             <a href="#" class="text-dark ml-auto mb-3 mb-sm-0"> View all Brand</a>
+            <a href="{{ route('brand.create') }}" class="text-primary ml-auto mb-3 mb-sm-0"> Add New Brand</a>
           </div>
           <div class="table-responsive border rounded p-1">
             <table class="table">
@@ -96,6 +97,18 @@
         </div>
       </div>
     </div>
+
+
+
   </div>
+
+
+
+
+
+@endsection
+
+@section('scripts')
+
 
 @endsection

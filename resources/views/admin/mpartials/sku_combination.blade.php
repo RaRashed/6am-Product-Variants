@@ -19,10 +19,12 @@
       <tbody>
 @endif
 @foreach ($combinations as $key => $combination)
+
    @php
       $sku = '';
       foreach (explode(' ', $product_name) as $key => $value) {
         $sku .= substr($value, 0, 1);
+        print_r($sku);
       }
 
       $str = '';

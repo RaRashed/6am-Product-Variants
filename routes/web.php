@@ -62,7 +62,7 @@ Route::resource('category', CategoryController::class);
 Route::resource('brand',BrandController::class);
 Route::resource('product',ProductController::class);
 Route::resource('coupon',CouponContoller::class);
-Route::get('admin/product/sku-combination',[ProductController::class,'sku_combination']);
+Route::post('admin/product/sku-combination',[ProductController::class,'sku_combination'])->name('sku.combination');
 
 
 Route::delete('image/{img_id}/delete',[ImageController::class,'Imagedestroy'])->name('destroyimage');

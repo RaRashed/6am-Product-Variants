@@ -1,123 +1,196 @@
-@extends('admin.layouts.master')
-
+@extends('admin.layouts.mmaster')
 
 @section('content')
 
-<div class="content-header">
-                    <!-- leftside content header -->
-                    <div class="leftside-content-header">
-                        <ul class="breadcrumbs">
-                            <li><i class="fa fa-home" aria-hidden="true"></i><a href="index.php">Dashboard</a></li>
-                            <li><a href="">Category</a></li>
-
-                        </ul>
-                    </div>
-                </div>
-                  <div class="row animated fadeInUp">
-                    <div class="col-sm-12 col-lg-9">
-                          <h4 class="section-subtitle"><b>Category</b></h4>
-                          <div>
-                          <a class="btn btn-primary" href="{{ route('category.create') }}">Addnew</a>
-                          </div>
-                          @if ($message = Session::get('success'))
-
-                          <div class="alert alert-success">
-
-                              <p>{{ $message }}</p>
-
-                          </div>
-
-                      @endif
-                    <div class="panel">
-                        <div class="panel-content">
-                            <div class="table-responsive">
-                                <table id="basic-table" class="data-table table table-striped nowrap table-hover table-bordered" cellspacing="0" width="100%">
 
 
-                        		<thead>
-                        			<th>#</th>
-                        			<th>Category Name</th>
-                                     <th>Sub Category</th>
+<div class="page-header">
+    <h3 class="page-title"> Form elements </h3>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Forms</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Form elements</li>
+      </ol>
+    </nav>
+  </div>
 
-                              <th>Action</th>
-                        		</thead>
+  @if ($message = Session::get('success'))
+
+  <div class="alert alert-success">
+
+      <p>{{ $message }}</p>
+
+  </div>
+
+@endif
+  <div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-sm-flex align-items-center mb-4">
+            <h4 class="card-title mb-sm-0">category</h4>
+            <a href="{{ route('category.create') }}" class="text-primary ml-auto mb-3 mb-sm-0"> Add New Category</a>
+          </div>
+          <div class="table-responsive border rounded p-1">
+            <table class="table">
+              <thead>
+                <tr>
+                    <th>#</th>
+                  <th class="font-weight-bold">Category Name</th>
+                  <th class="font-weight-bold">Sub Category</th>
 
 
-                        		<tbody>
-                              @foreach($categories as $key => $category)
-                              <tr>
-                              <td>{{$key+1}}</td>
-                              <td>{{$category->name}}</td>
-                               <td>
-                                @if($category->category_id ==null)
-                                Primary Category
+                  <th class="font-weight-bold">Action</th>
 
-                                @else
-                                @foreach ($category->childrenCategories as $childCategory)
-                                {{ $childCategory->name }}
-                                @endforeach
+                </tr>
+              </thead>
+              <tbody>
+                @foreach($categories as $key => $category)
+                <tr>
 
-                                @endif
+                    <td>{{$key+1}}</td>
+                    <td>{{$category->name}}</td>
+                    <td>
+                        @if($category->category_id ==null)
+                        Primary Category
 
+                        @else
+                        @foreach ($category->childrenCategories as $childCategory)
+                        {{ $childCategory->name }}
+                        @endforeach
 
-
-                               </td>
-
-                                <td>
-                                    <form action="{{ route('category.destroy',$category->id) }}" method="POST">
+                        @endif
 
 
 
-                                        <a class="btn btn-info" href="{{ route('category.show',$category->id) }}"><i class="fa fa-eye"></i></a>
+                       </td>
+
+                      <td>
+                          <form action="{{ route('category.destroy',$category->id) }}" method="POST">
 
 
 
-                                        <a class="btn btn-primary" href="{{ route('category.edit',$category->id) }}"><i class="fa fa-edit"></i></a>
+                              <a class="btn btn-info btn-sm" href="{{ route('category.show',$category->id) }}"><i class="fa fa-eye"></i></a>
 
 
 
-                                        @csrf
-
-                                        @method('DELETE')
+                              <a class="btn btn-primary btn-sm" href="{{ route('category.edit',$category->id) }}"><i class="fa fa-edit"></i></a>
 
 
 
-                                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                              @csrf
 
-                                    </form>
-                                </td>
-                              </tr>
-                                @endforeach
+                              @method('DELETE')
 
-                        		</tbody>
+                              <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
 
+                          </form>
+                      </td>
+                  </tr>
 
-
-                        		<tfoot>
-                        		  <th>#</th>
-                              <th>Category Name</th>
-                              <th>Sub Category</th>
-
-                              <th>Action</th>
-                        		</tfoot>
-                        	</table>
+@endforeach
 
 
 
-                    </div>
-                </div>
-            </div>
+
+              </tbody>
+            </table>
+          </div>
+
+{{-- <div class="d-flex mt-4 flex-wrap">
+            <p class="text-muted">Showing 1 to 10 of 57 entries</p>
+            <nav class="ml-auto">
+              <ul class="pagination separated pagination-info">
+                <li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-left"></i></a></li>
+                <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                <li class="page-item"><a href="#" class="page-link">2</a></li>
+                <li class="page-item"><a href="#" class="page-link">3</a></li>
+                <li class="page-item"><a href="#" class="page-link">4</a></li>
+                <li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-right"></i></a></li>
+              </ul>
+            </nav>
+          </div> --}}
+
         </div>
-
-
-
-
-
-
+      </div>
     </div>
+
+
+
+  </div>
 
 
 
 
 
 @endsection
+
+@section('scripts')
+
+
+@endsection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
