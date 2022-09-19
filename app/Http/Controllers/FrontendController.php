@@ -63,7 +63,7 @@ class FrontendController extends Controller
 
             "name" => $product->name,
             "quantity" => 1,
-            "price" => $product->price
+            "product_price" => $product->product_price
             //"prod_image" => $product->id,
         ];
 

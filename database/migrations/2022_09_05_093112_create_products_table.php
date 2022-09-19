@@ -21,13 +21,13 @@ class CreateProductsTable extends Migration
             $table->string('brand_id');
             $table->string('detail');
             $table->string('colors');
-            $table->string('variant_product');
+            //$table->string('variant_product');
             $table->string('attributes');
             $table->string('sku');
             $table->string('choice_options');
-            $table->string('variation');
-            $table->string('price');
-            $table->string('quantity');
+            $table->longText('variation');
+           // $table->string('price');
+           // $table->string('quantity');
             $table->timestamps();
         });
     }
