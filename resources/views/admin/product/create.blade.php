@@ -50,6 +50,19 @@
                 </div>
               </div>
               <div class="form-group row">
+                <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Product Price</label>
+
+                <div class="col-sm-9">
+                    <input type="text" name="product_price" placeholder="Enter category name" class="form-control" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Details</label>
+                <div class="col-sm-9">
+                    <input type="text" name="detail" placeholder="Enter Product Detail" class="form-control" required>
+                </div>
+              </div>
+              <div class="form-group row">
                 <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Category</label>
                 <div class="col-sm-9">
                     <select name="category_id" class="form-control">
@@ -147,19 +160,7 @@
 
 
 
-              <div class="form-group row">
-                <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Details</label>
-                <div class="col-sm-9">
-                    <input type="text" name="detail" placeholder="Enter Product Detail" class="form-control" required>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="exampleInputConfirmPassword2" class="col-sm-3 col-form-label">Price</label>
-                <div class="col-sm-9">
 
-                    <input type="number" name="unit-price" placeholder="Enter Product Price" class="form-control" required>
-                </div>
-              </div>
               {{-- <div class="form-group row" id="quantity">
                 <label for="exampleInputConfirmPassword2" class="col-sm-3 col-form-label">Quantity</label>
                 <div class="col-sm-9">
@@ -181,7 +182,7 @@
 
 
               <button type="submit" class="btn btn-primary mr-2">Submit</button>
-              <button class="btn btn-light">Cancel</button>
+
             </form>
           </div>
         </div>
@@ -283,7 +284,7 @@ $('#choice_attributes').on('change', function() {
         });
 
         $.ajax({
-            type: "GET",
+            type: "post",
             url: "{{route('sku.combination')}}",
             data: $('#product_form').serialize(),
             success: function(data) {

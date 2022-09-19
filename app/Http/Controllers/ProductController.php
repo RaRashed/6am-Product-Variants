@@ -12,6 +12,7 @@ use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use DB;
+use Str;
 
 class ProductController extends Controller
 {
@@ -66,28 +67,34 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'product_price' => 'required',
             'category_id'=>'required',
             'brand_id' => 'required',
-            'price' => 'required',
+
             'detail' => 'required',
+
+
             'images' =>'required'
 
         ]);
+
+       // print_r($request->all());
 
       $product = new Product();
       $product->name =$request->name;
       $product->category_id =$request->category_id;
       $product->brand_id =$request->brand_id;
-      $product->quantity =$request->quantity;
-      $product->price =$request->price;
+      //$product->quantity =$request->quantity;
+      $product->product_price =$request->product_price;
+      $product->variant_product=1;
       $product->detail =$request->detail;
 
 
       if ($request->has('colors_active') && $request->has('colors') && count($request->colors) > 0) {
-        $p->colors = json_encode($request->colors);
+        $product->colors = json_encode($request->colors);
     } else {
         $colors = [];
-        $p->colors = json_encode($colors);
+        $product->colors = json_encode($colors);
     }
     $choice_options = [];
     if ($request->has('choice')) {
@@ -99,7 +106,7 @@ class ProductController extends Controller
             array_push($choice_options, $item);
         }
     }
-    $p->choice_options = json_encode($choice_options);
+    $product->choice_options = json_encode($choice_options);
     //combinations start
     $options = [];
     if ($request->has('colors_active') && $request->has('colors') && count($request->colors) > 0) {
@@ -115,7 +122,7 @@ class ProductController extends Controller
     }
     //Generates the combinations of customer choice options
 
-    $combinations = Helpers::combinations($options);
+    $combinations = combinations($options);
 
     $variations = [];
     $stock_count = 0;
@@ -127,7 +134,7 @@ class ProductController extends Controller
                     $str .= '-' . str_replace(' ', '', $item);
                 } else {
                     if ($request->has('colors_active') && $request->has('colors') && count($request->colors) > 0) {
-                        $color_name = Color::where('code', $item)->first()->name;
+                        $color_name = DB::table('colors')->where('id', $item)->first()->name;
                         $str .= $color_name;
                     } else {
                         $str .= str_replace(' ', '', $item);
@@ -136,34 +143,36 @@ class ProductController extends Controller
             }
             $item = [];
             $item['type'] = $str;
-            $item['price'] = BackEndHelper::currency_to_usd(abs($request['price_' . str_replace('.', '_', $str)]));
+          $item['price'] = abs($request['price_' . str_replace('.', '_', $str)]);
             $item['sku'] = $request['sku_' . str_replace('.', '_', $str)];
             $item['qty'] = abs($request['qty_' . str_replace('.', '_', $str)]);
             array_push($variations, $item);
-            $stock_count += $item['qty'];
-        }
-    } else {
-        $stock_count = (integer)$request['current_stock'];
-    }
-
-    if ($validator->errors()->count() > 0) {
-        return response()->json(['errors' => Helpers::error_processor($validator)]);
-    }
-
-      $product->save();
-
-       foreach($request->file('images') as $img)
-        {
-
-        $imgPath =$img->store('productImages');
-        $imgProduct = new ProductImage();
-        $imgProduct->product_id = $product->id;
-        $imgProduct->prod_image = $imgPath;
-       // $imgPath->move(public_path('images'),$imgProduct->prod_image);
-        $imgProduct->save();
-
 
         }
+    }
+$product->variation =json_encode($variations);
+//dd($variations);
+$product->attributes = json_encode($request->choice_attributes);
+$product->sku=Str::slug($request->name);
+
+
+$product->price=1;
+$product->quantity=2;
+//dd($product);
+$product->save();
+
+    //    foreach($request->file('images') as $img)
+    //     {
+
+    //     $imgPath =$img->store('productImages');
+    //     $imgProduct = new ProductImage();
+    //     $imgProduct->product_id = $product->id;
+    //     $imgProduct->prod_image = $imgPath;
+    //    // $imgPath->move(public_path('images'),$imgProduct->prod_image);
+    //     $imgProduct->save();
+
+
+        //}
 
 
 
@@ -281,7 +290,7 @@ class ProductController extends Controller
             $colors_active = 0;
         }
 
-        $unit_price = $request->unit_price;
+      $product_price = $request->product_price;
        //$product_name = $request->name[array_search('en', $request->lang)];
          $product_name = $request->name;
         if ($request->has('choice_no')) {
@@ -311,7 +320,7 @@ class ProductController extends Controller
        //$products =DB::table('colors')->get()->all();
        //dd($products);
         return response()->json([
-            'view' => view('admin.mpartials.sku_combination', compact('combinations','options','product_name', 'unit_price', 'colors_active'))->render(),
+            'view' => view('admin.mpartials.sku_combination', compact('combinations','options','product_name', 'product_price', 'colors_active'))->render(),
 
         ]);
     }
@@ -341,35 +350,4 @@ class ProductController extends Controller
 
 
 
-    public function combination(Request $request)
-    {
-//        return $request;
-        $options = [];
-        if ($request->has('colors_active') && $request->has('colors') && count($request->colors) > 0) {
-            $colors_active = 1;
-            array_push($options, $request->colors);
-        } else {
-            $colors_active = 0;
-        }
-
-        $unit_price = $request->unit_price;
-       //$product_name = $request->name[array_search('en', $request->lang)];
-         $product_name = $request->name;
-        if ($request->has('choice_no')) {
-            foreach ($request->choice_no as $key => $no) {
-                $name = 'choice_options_' . $no;
-                $my_str = implode('', $request[$name]);
-
-                array_push($options, explode(',', $my_str));
-            }
-        }
-
-       $combinations =combinations($options);
-       $products =DB::table('colors')->get()->all();
-       //dd($products);
-        return response()->json([
-            $options
-
-        ]);
-    }
 }
