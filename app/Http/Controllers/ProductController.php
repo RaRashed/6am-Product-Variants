@@ -8,6 +8,8 @@ use Helpers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Color;
+use App\Models\Attribute;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -53,8 +55,8 @@ class ProductController extends Controller
         $colors=DB::table('colors')->get();
 
 //dd($colors);
-       //$attributes=DB::table('attributes')->get();
-        return view('admin.product.create',['categories'=>$categories,'brands'=>$brands,'colors'=>$colors]);
+       $attributes=DB::table('attributes')->get();
+        return view('admin.product.create',['categories'=>$categories,'brands'=>$brands,'colors'=>$colors,'attributes'=>$attributes]);
     }
 
     /**
@@ -105,6 +107,7 @@ class ProductController extends Controller
             $item['name'] = 'choice_' . $no;
 
             $item['title'] = $request->choice[$key];
+            //dd($item['title'] );
 
 
             $item['options'] = explode(',', implode('|', $request[$str]));
@@ -124,16 +127,23 @@ class ProductController extends Controller
 
     $options = [];
     if ($request->has('colors_active') && $request->has('colors') && count($request->colors) > 0) {
-        $colors_active = 1;
+       // $colors_active = 1;
         array_push($options, $request->colors);
     }
+
     if ($request->has('choice_no')) {
         foreach ($request->choice_no as $key => $no) {
             $name = 'choice_options_' . $no;
+
             $my_str = implode('|', $request[$name]);
+            //return print_r($my_str);
             array_push($options, explode(',', $my_str));
+
         }
+
     }
+    //dd($options);
+
 
 
 
@@ -141,15 +151,34 @@ class ProductController extends Controller
     $combinations = [[]];
 
     foreach ($options as $property => $property_values) {
+
         $tmp = [];
         foreach ($combinations as $combinations_item) {
+
             foreach ($property_values as $property_value) {
+
                 $tmp[] = array_merge($combinations_item, [$property => $property_value]);
+
             }
         }
         $combinations = $tmp;
 
+
     }
+   // dd($combinations);
+
+
+    // foreach ($options as $property => $property_values) {
+    //     dd($property_values);
+    //     $tmp = [];
+    //     foreach ($combinations as $combinations_item) {
+    //         foreach ($property_values as $property_value) {
+    //             $tmp[] = array_merge($combinations_item, [$property => $property_value]);
+    //         }
+    //     }
+    //     $combinations = $tmp;
+
+    // }
 
     $variations = [];
 
@@ -170,7 +199,7 @@ class ProductController extends Controller
             }
             $item = [];
             $item['type'] = $str;
-          $item['price'] = abs($request['price_' . str_replace('.', '_', $str)]);
+            $item['price'] = abs($request['price_' . str_replace('.', '_', $str)]);
             $item['sku'] = $request['sku_' . str_replace('.', '_', $str)];
             $item['qty'] = abs($request['qty_' . str_replace('.', '_', $str)]);
             array_push($variations, $item);
@@ -178,7 +207,7 @@ class ProductController extends Controller
         }
 
     }
-    return print_r(json_encode($variations));
+    //return print_r(json_encode($variations));
 $product->variation =json_encode($variations);
 //dd($variations);
 $product->attributes = json_encode($request->choice_attributes);
@@ -230,9 +259,18 @@ $product->save();
     public function edit($id)
     {
         $product=$this->product::find($id);
+        //dd($product);
         $categories=$this->category::all();
+         $product->colors = json_decode($product->colors);
+         $product->attributes = json_decode($product->attributes);
+
+         $product->choice_options=json_decode($product->choice_options);
+        // dd($product->colors);
+
+        $colors=Color::all();
+        $attributes=Attribute::all();
         $brands= $this->brand::all();
-        return view('admin.product.edit',['categories'=>$categories,'brands' => $brands,'product'=>$product]);
+        return view('admin.product.edit',['categories'=>$categories,'brands' => $brands,'product'=>$product,'colors'=>$colors,'attributes'=>$attributes]);
 
     }
 
@@ -245,37 +283,138 @@ $product->save();
      */
     public function update(Request $request, $id)
     {
+       // dd($request->all());
         $request->validate([
-            'name' => 'required|max:255',
-            'category_id' => 'required',
-            'brand_id' =>'required',
-            'price' => 'required',
-            'quantity' =>'required',
+            'name' => 'required',
+            'product_price' => 'required',
+            'category_id'=>'required',
+            'brand_id' => 'required',
             'detail' => 'required',
+            'images' =>'required'
            ]);
 
 
-        $product = $this->product::find($id);
-        $product->name = $request->name;
-        $product->category_id = $request->category_id;
-        $product->brand_id = $request->brand_id;
-        $product->price = $request->price;
-        $product->quantity = $request->quantity;
-        $product->detail = $request->detail;
-          $product->update();
+           $product = Product::find($id);
+        $product->name =$request->name;
+        $product->category_id =$request->category_id;
+        $product->brand_id =$request->brand_id;
+        //$product->quantity =$request->quantity;
+        $product->product_price =$request->product_price;
+        //$product->variant_product=1;
+        $product->detail =$request->detail;
 
-          if($request->hasFile('images')){
-               foreach($request->file('images') as $img)
-                    {
 
-                   $imgPath =$img->store('productImages');
-                    $imgData = new ProductImage();
-                    $imgData->product_id = $product->id;
-                    $imgData->prod_image = $imgPath;
-                    $imgData->save();
+        if ($request->has('colors_active') && $request->has('colors') && count($request->colors) > 0) {
+            $product->colors = json_encode($request->colors);
+        } else {
+            $colors = [];
+            $product->colors = json_encode($colors);
+        }
+        $choice_options = [];
+        if ($request->has('choice')) {
+            foreach ($request->choice_no as $key => $no) {
+                $str = 'choice_options_' . $no;
+                $item['name'] = 'choice_' . $no;
+                $item['title'] = $request->choice[$key];
+                $item['options'] = explode(',', implode('|', $request[$str]));
+                array_push($choice_options, $item);
+            }
+        }
+        $product->choice_options = json_encode($choice_options);
+        $variations = [];
+        //combinations start
+        $options = [];
+        if ($request->has('colors_active') && $request->has('colors') && count($request->colors) > 0) {
+            $colors_active = 1;
+            array_push($options, $request->colors);
+        }
+        if ($request->has('choice_no')) {
+            foreach ($request->choice_no as $key => $no) {
+                $name = 'choice_options_' . $no;
+                $my_str = implode('|', $request[$name]);
+                array_push($options, explode(',', $my_str));
+            }
+        }
+        $combinations = [[]];
 
+        foreach ($options as $property => $property_values) {
+
+            $tmp = [];
+            foreach ($combinations as $combinations_item) {
+
+                foreach ($property_values as $property_value) {
+
+                    $tmp[] = array_merge($combinations_item, [$property => $property_value]);
+
+                }
+            }
+            $combinations = $tmp;
+
+
+        }
+        $variations = [];
+
+        if (count($combinations[0]) > 0) {
+            foreach ($combinations as $key => $combination) {
+                $str = '';
+                foreach ($combination as $k => $item) {
+                    if ($k > 0) {
+                        $str .= '-' . str_replace(' ', '', $item);
+                    } else {
+                        if ($request->has('colors_active') && $request->has('colors') && count($request->colors) > 0) {
+                            $color_name = DB::table('colors')->where('id', $item)->first()->name;
+                           // dd($color_name);
+                            $str .= $color_name;
+                        } else {
+                            $str .= str_replace(' ', '', $item);
+                        }
                     }
                 }
+               // dd($str);
+
+                $item = [];
+                $item['type'] = $str;
+                $item['price'] = abs($request['price_' . str_replace('.', '_', $str)]);
+              // dd( $item['price'] );
+
+                $item['sku'] = $request['sku_' . str_replace('.', '_', $str)];
+                $item['qty'] = abs($request['qty_' . str_replace('.', '_', $str)]);
+                array_push($variations, $item);
+
+            }
+        }
+        //dd($variations);
+
+
+
+        // if ($validator->fails()) {
+        //     return back()->withErrors($validator)
+        //         ->withInput();
+        // }
+
+        //combinations end
+        $product->variation = json_encode($variations);
+
+
+        $product->attributes = json_encode($request->choice_attributes);
+
+
+
+            $product->save();
+
+
+        //   if($request->hasFile('images')){
+        //        foreach($request->file('images') as $img)
+        //             {
+
+        //            $imgPath =$img->store('productImages');
+        //             $imgData = new ProductImage();
+        //             $imgData->product_id = $product->id;
+        //             $imgData->prod_image = $imgPath;
+        //             $imgData->save();
+
+        //             }
+        //         }
                 return redirect(route('product.index'))->with('success', 'product Updated Successfully');
 
 

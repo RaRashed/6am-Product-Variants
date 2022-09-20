@@ -132,8 +132,12 @@
                           <div class="form-group row">
                             <div class="col-sm-9">
                                 <select class="js-example-basic-multiple-attribute form-control" name="choice_attributes[]" id="choice_attributes" multiple="multiple">
-                                    <option value="size">Size</option>
-                                    <option value="type">Type</option>
+
+                                    @foreach ($attributes as $attribute )
+                                    <option value="{{ $attribute->name }}">{{ $attribute->name }}</option>
+
+
+                                    @endforeach
                                   </select>
                             </div>
                           </div>
