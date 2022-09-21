@@ -17,13 +17,13 @@ class ColorSeeder extends Seeder
     public function run()
     {
         Color::create([
-            'name'=>'Red',
+            'name'=>'red',
             'code'=>'#accfg'
 
 
         ]);
         Color::create([
-            'name'=>'Black',
+            'name'=>'black',
              'code' =>'#ffff'
         ]);
     }

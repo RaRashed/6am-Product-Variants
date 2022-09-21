@@ -10,6 +10,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CouponContoller;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\CurrencyController;
 
 
 /*
@@ -81,6 +82,16 @@ Route::get('checkout', [FrontendController::class,'checkout'])->name('checkout')
 
 Route::post('update-cart', [FrontendController::class,'update']);
 Route::post('remove-from-cart', [FrontendController::class, 'remove']);
+
+//currency
+Route::resource('currency',CurrencyController::class);
+
+
+Route::post('currency-system-update', [CurrencyController::class,'currency_update'])->name('currency-system-update');
+Route::get('currency-search', [CurrencyController::class,'searchCurrency'])->name('search');
+
+
+
 
 
 

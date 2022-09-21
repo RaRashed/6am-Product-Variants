@@ -132,3 +132,9 @@ class CouponContoller extends Controller
                         ->with('success','Coupon deleted successfully');
     }
 }
+
+        // DB::table('business_settings')->where('id', 1)
+        //         ->update([
+        //             'value' => $convertion_factor,
+        //             'updated_at' => now()
+        //         ]);
