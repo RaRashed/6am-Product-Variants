@@ -54,24 +54,33 @@
             </a>
           </div>
         </li>
-        <li class="nav-item dropdown language-dropdown d-none d-sm-flex align-items-center">
+        <li>
+            <div style="background:white;padding: 2px;border-radius: 5px;">
+                <select onchange="changeLanguage(this.value)" >
+                    <option {{session()->has('lang_code')?(session()->get('lang_code')=='en'?'selected':''):''}} value="en" class="d-inline-flex mr-3"> <i width="20" class="flag-icon flag-icon-us"></i>English</option>
+                    <option {{session()->has('lang_code')?(session()->get('lang_code')=='fr'?'selected':''):''}} value="fr" class="d-inline-flex mr-3">Urdu</option>
+                    <option {{session()->has('lang_code')?(session()->get('lang_code')=='bn'?'selected':''):''}} value="bn" class="d-inline-flex mr-3">Bangla</option>
+                </select>
+            </div>
+        </li>
+        {{-- <li class="nav-item dropdown language-dropdown d-none d-sm-flex align-items-center" onchange="changeLanguage(this.value)">
           <a class="nav-link d-flex align-items-center dropdown-toggle" id="LanguageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
             <div class="d-inline-flex mr-3">
               <i class="flag-icon flag-icon-us"></i>
             </div>
             <span class="profile-text font-weight-normal">English</span>
           </a>
+
           <div class="dropdown-menu dropdown-menu-left navbar-dropdown py-2" aria-labelledby="LanguageDropdown">
-            <a class="dropdown-item">
+            <a class="dropdown-item" {{session()->has('lang_code')?(session()->get('lang_code')=='en'?'selected':''):''}} value="en">
               <i class="flag-icon flag-icon-us"></i> English </a>
             <a class="dropdown-item">
-              <i class="flag-icon flag-icon-fr"></i> French </a>
+              <i class="flag-icon flag-icon-fr" {{session()->has('lang_code')?(session()->get('lang_code')=='fr'?'selected':''):''}} value="fr"></i> French </a>
             <a class="dropdown-item">
-              <i class="flag-icon flag-icon-ae"></i> Arabic </a>
-            <a class="dropdown-item">
-              <i class="flag-icon flag-icon-ru"></i> Russian </a>
+              <i class="flag-icon flag-icon-ae" {{session()->has('lang_code')?(session()->get('lang_code')=='bn'?'selected':''):''}} value="bn"></i> Bangla </a>
+
           </div>
-        </li>
+        </li> --}}
         <li class="nav-item dropdown d-none d-xl-inline-flex user-dropdown">
           <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
             <img class="img-xs rounded-circle ml-2" src="images/faces/face8.jpg" alt="Profile image"> <span class="font-weight-normal"> Henry Klein </span></a>
@@ -94,3 +103,9 @@
       </button>
     </div>
   </nav>
+
+  @section('scripts')
+
+
+
+@endsection

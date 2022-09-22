@@ -48,7 +48,8 @@
               <h6>
                 Price
                 <span>
-                  {{ $product->price }}
+                 {{ $convert_value->symbol}} {{ $product->product_price * $convert_value->rate}}
+                  {{-- {{ $product->product_price }} --}}
                 </span>
               </h6>
 

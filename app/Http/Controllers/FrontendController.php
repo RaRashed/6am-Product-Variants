@@ -8,6 +8,7 @@ use App\Models\Product;
 use Session;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use DB;
 
 class FrontendController extends Controller
 {
@@ -23,7 +24,9 @@ class FrontendController extends Controller
     public function index()
     {
         $products =$this->product::all();
-        return view('frontend.index',['products' => $products]);
+        $convert_value=DB::table('currencies')->where('is_default',1)->first();
+        //dd($convert_value);
+        return view('frontend.index',['products' => $products,'convert_value'=>$convert_value]);
     }
     public function cart()
     {

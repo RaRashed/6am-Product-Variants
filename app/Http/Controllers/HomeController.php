@@ -36,10 +36,12 @@ class HomeController extends Controller
 
     }
     function changeLang($langcode){
+        //dd($langcode);
 
         App::setLocale($langcode);
         session()->put("lang_code",$langcode);
         return redirect()->back();
+
     }
 
 

@@ -22,3 +22,10 @@
     <script src="{{ asset('massets/vendors/select2/select2.min.js') }}"></script>
 
     <script src="{{ asset('massets/js/select2.js') }}"></script>
+
+    <script>
+
+        function changeLanguage(lang){
+            window.location='{{url("change-language")}}/'+lang;
+        }
+        </script>

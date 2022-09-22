@@ -37,11 +37,11 @@
               <thead>
 
                   <th class="font-weight-bold">#</th>
-                  <th class="font-weight-bold">Product Name</th>
-                   <th class="font-weight-bold">Product Category</th>
-                   <th class="font-weight-bold">Product Brand</th>
-                   <th class="font-weight-bold">Product Price</th>
-                   <th class="font-weight-bold">Product Quantity</th>
+                  <th class="font-weight-bold">{{__("messages.product_name")}}</th>
+                   <th class="font-weight-bold">{{__("messages.product_category")}}</th>
+                   <th class="font-weight-bold">{{__("messages.product_brand")}}</th>
+                   <th class="font-weight-bold">{{__("messages.product_price")}}</th>
+
 
                     <th class="font-weight-bold">Action</th>
 
@@ -54,8 +54,8 @@
                 <td>{{$product->name}}</td>
                <td>{{ $product->category->name }}</td>
                <td>{{ $product->brand->name }}</td>
-               <td>{{ $product->price }}</td>
-               <td>{{ $product->quantity }}</td>
+               <td>{{ $product->product_price }}</td>
+
 
 
                   <td>

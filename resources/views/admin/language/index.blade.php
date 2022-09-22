@@ -10,7 +10,7 @@
        </select>
    </div>
 
-   <h2>{{__("messages.title")}}</h2>
+   <h2>{{__("messages.product")}}</h2>
 
 
 
