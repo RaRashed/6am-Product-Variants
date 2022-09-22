@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App;
+
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -31,6 +34,12 @@ class HomeController extends Controller
 
         return view('admin.mindex');
 
+    }
+    function changeLang($langcode){
+
+        App::setLocale($langcode);
+        session()->put("lang_code",$langcode);
+        return redirect()->back();
     }
 
 

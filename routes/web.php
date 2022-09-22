@@ -11,6 +11,7 @@ use App\Http\Controllers\CouponContoller;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\LanguageController;
 
 
 /*
@@ -42,7 +43,7 @@ All Normal Users Routes List
 --------------------------------------------*/
 
 
- //Route::get('/home', [HomeController::class, 'index'])->name('home');
+ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 
@@ -92,6 +93,10 @@ Route::get('currency-search', [CurrencyController::class,'searchCurrency'])->nam
 
 
 
+
+//Language
+Route::get('change-language/{lang}',[HomeController::class,'changeLang'])->middleware('auth');
+Route::get('language',[LanguageController::class,'index'])->middleware('Language');
 
 
 

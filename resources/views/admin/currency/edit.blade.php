@@ -31,7 +31,7 @@
     <div class="card-header">
     <h5 class="text-center">
     <i class="tio-money"></i>
-    Add New Currency
+Edit {{ $currency->name }} Currency
     </h5>
     </div>
     <div class="card-body">
@@ -64,7 +64,7 @@
     </div>
     <div class="form-group text-center">
     <button type="submit" id="add" class="btn btn-primary text-capitalize" style="color: white">
-    <i class="fa fa-add"></i> Add
+    <i class="fa fa-save"></i> Update
     </button>
     </div>
     </form>

@@ -140,7 +140,7 @@
     <th scope="col">Currency symbol</th>
     <th scope="col">Currency code</th>
     <th scope="col">Exchange rate
-    (1 EUR= ?)
+
     </th>
 
     <th scope="col">Action</th>
