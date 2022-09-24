@@ -5,12 +5,12 @@
    <div>
        Langauge : <select onchange="changeLanguage(this.value)" >
            <option {{session()->has('lang_code')?(session()->get('lang_code')=='en'?'selected':''):''}} value="en">English</option>
-           <option {{session()->has('lang_code')?(session()->get('lang_code')=='fr'?'selected':''):''}} value="fr">French</option>
+           <option {{session()->has('lang_code')?(session()->get('lang_code')=='fr'?'selected':''):''}} value="fr">urdu</option>
            <option {{session()->has('lang_code')?(session()->get('lang_code')=='bn'?'selected':''):''}} value="bn">Bangla</option>
        </select>
    </div>
 
-   <h2>{{__("messages.product")}}</h2>
+   <h2>{{__("messages.product_name")}}</h2>
 
 
 

@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Product;
 
-class ProductImageController extends Controller
+
+use Illuminate\Http\Request;
+use App\Models\Category;
+
+class PosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +17,10 @@ class ProductImageController extends Controller
      */
     public function index()
     {
-        //
+         $categories=Category::all();
+         $products=Product::all();
+        return view('admin.pos.index',['categories'=>$categories,'products'=>$products]);
+
     }
 
     /**

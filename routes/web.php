@@ -11,6 +11,7 @@ use App\Http\Controllers\CouponContoller;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\PosController;
 use App\Http\Controllers\LanguageController;
 
 
@@ -62,7 +63,7 @@ Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.hom
 
 Route::resource('category', CategoryController::class);
 Route::resource('brand',BrandController::class);
-Route::resource('product',ProductController::class)->middleware('Language');
+Route::resource('product',ProductController::class);
 Route::resource('coupon',CouponContoller::class);
 Route::any('admin/product/sku-combination',[ProductController::class,'sku_combination'])->name('sku.combination');
 Route::get('combination',[ProductController::class,'combination']);
@@ -95,8 +96,11 @@ Route::get('currency-search', [CurrencyController::class,'searchCurrency'])->nam
 
 
 //Language
-Route::get('change-language/{lang}',[HomeController::class,'changeLang'])->middleware('auth');
+Route::get('change-language/{lang}',[HomeController::class,'changeLang']);
 //Route::get('language',[LanguageController::class,'index'])->middleware('Language');
 
 
+//POS System
+
+Route::resource('pos',PosController::class);
 

@@ -62,6 +62,7 @@
           </a>
         </div>
       </div>
+      {{__("messages.product_name")}}
 
       @endforeach
 
