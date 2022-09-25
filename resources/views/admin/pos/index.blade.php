@@ -15,6 +15,7 @@
 
 <meta name="_token" content="V9jzOW25DytEFhU0W3hDDV333dNIKDXMEATx7uyE">
 <link rel="stylesheet" href="https://6valley.6amtech.com/public/assets/back-end/css/theme.minc619.css?v=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
         .scroll-bar {
             max-height: calc(100vh - 100px);
@@ -103,7 +104,8 @@
 <div class="col-md-12">
 <div id="loading" style="display: none;">
 <div style="position: fixed;z-index: 9999; left: 40%;top: 37% ;width: 100%">
-<img width="200" src="https://6valley.6amtech.com/public/assets/admin/img/loader.gif">
+{{-- <img width="200" src="https://6valley.6amtech.com/public/assets/admin/img/loader.gif">  --}}
+<h1>Wait i am comming</h1>
 </div>
 </div>
 </div>
@@ -174,6 +176,7 @@
             </div>
         @endforeach
     </div>
+
 </div>
 <div class="card-footer">
 <div class="row">
@@ -188,6 +191,7 @@
 <div class="form-group mt-1 col-12 w-i6">
 <select onchange="customer_change(this.value);" id='customer' name="customer_id" data-placeholder="Walk In Customer" class="js-data-example-ajax form-control">
 <option value="0">Walking customer</option>
+
 </select>
 
 </div>
@@ -221,198 +225,7 @@ Clear cart
  </div>
 </div>
 <div class='w-100' id="cart">
-<div class="d-flex flex-row" style="max-height: 300px; overflow-y: scroll;">
-<table class="table table-bordered">
-<thead class="text-muted">
-<tr>
-<th scope="col">Item</th>
-<th scope="col" class="text-center">Qty</th>
-<th scope="col">Price</th>
-<th scope="col">Delete</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
-</div>
-<div class="box p-3">
-<dl class="row text-sm-right">
-<div class="col-12 d-flex justify-content-between">
-<dt class="col-sm-6">Sub total : </dt>
-<dd class="col-sm-6 text-right">$0.0</dd>
-</div>
-<div class="col-12 d-flex justify-content-between">
-<dt class="col-sm-6">Product Discount :</dt>
-<dd class="col-sm-6 text-right">$0.0</dd>
-</div>
-<div class="col-12 d-flex justify-content-between">
-<dt class="col-sm-6">Extra Discount :</dt>
-<dd class="col-sm-6 text-right">
-<button id="extra_discount" class="btn btn-sm" type="button" data-toggle="modal" data-target="#add-discount">
-<i class="tio-edit"></i></button>
-$0.0
-</dd>
-</div>
-<div class="col-12 d-flex justify-content-between">
-<dt class="col-sm-6">Coupon Discount :</dt>
-<dd class="col-sm-6 text-right">
-<button id="coupon_discount" class="btn btn-sm" type="button" data-toggle="modal" data-target="#add-coupon-discount">
-<i class="tio-edit"></i>
-</button>
-$0.0
-</dd>
-</div>
-<div class="col-12 d-flex justify-content-between">
-<dt class="col-sm-6">Tax : </dt>
-<dd class="col-sm-6 text-right">$0.0</dd>
-</div>
-<div class="col-12 d-flex justify-content-between">
-<dt class="col-sm-6">Total : </dt>
-<dd class="col-sm-6 text-right h4 b">$0.0</dd>
-</div>
-</dl>
-<div class="row">
-<div class="col-md-6 mb-2">
-<a href="#" class="btn btn-danger btn-lg btn-block" onclick="emptyCart()"><i class="fa fa-times-circle "></i> Cancel </a>
-</div>
-<div class="col-md-6">
-<button id="submit_order" type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#paymentModal"><i class="fa fa-shopping-bag"></i>
-Order </button>
-</div>
-</div>
-</div>
-<div class="modal fade" id="add-discount" tabindex="-1">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<h5 class="modal-title">Update discount</h5>
-<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
-</div>
-<div class="modal-body">
-<div class="row">
-<div class="form-group col-sm-6">
-<label for="">Discount</label>
-<input type="number" id="dis_amount" class="form-control" name="discount">
-</div>
-<div class="form-group col-sm-6">
-<label for="">Type</label>
-<select name="type" id="type_ext_dis" class="form-control">
-<option value="amount" selected>Amount()</option>
-<option value="percent">Percent(%)</option>
-</select>
-</div>
-<div class="form-group col-sm-12">
-<button class="btn btn-primary" onclick="extra_discount();" type="submit">Submit</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="modal fade" id="add-coupon-discount" tabindex="-1">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<h5 class="modal-title">Coupon discount</h5>
-<button id="coupon_close" type="button" class="close" data-dismiss="modal" aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
-</div>
-<div class="modal-body">
-<div class="form-group col-sm-12">
-<label for="">Coupon code</label>
-<input type="text" id="coupon_code" class="form-control" name="coupon_code">
-</div>
-<div class="form-group col-sm-12">
-<button class="btn btn-primary" type="submit" onclick="coupon_discount();">Submit</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="modal fade" id="add-tax" tabindex="-1">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<h5 class="modal-title">Update tax</h5>
-<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
-</div>
-<div class="modal-body">
-<form action="https://6valley.6amtech.com/admin/pos/tax" method="POST" class="row">
-<input type="hidden" name="_token" value="V9jzOW25DytEFhU0W3hDDV333dNIKDXMEATx7uyE"> <div class="form-group col-12">
-<label for="">Tax (%)</label>
-<input type="number" class="form-control" name="tax" min="0">
-</div>
-<div class="form-group col-sm-12">
-<button class="btn btn-primary" type="submit">Submit</button>
-</div>
-</form>
-</div>
-</div>
-</div>
-</div>
-<div class="modal fade" id="paymentModal" tabindex="-1">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<h5 class="modal-title">Payment</h5>
-<button id="payment_close" type="button" class="close" data-dismiss="modal" aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
-</div>
-<div class="modal-body">
-<form action="https://6valley.6amtech.com/admin/pos/order" id='order_place' method="post" class="row">
-<input type="hidden" name="_token" value="V9jzOW25DytEFhU0W3hDDV333dNIKDXMEATx7uyE"> <div class="form-group col-12">
-<label class="input-label" for="">Amount($)</label>
-<input type="number" class="form-control" name="amount" min="0" step="0.01" value="0" readonly>
-</div>
-<div class="form-group col-12">
-<label class="input-label" for="">Type</label>
-<select name="type" class="form-control">
-<option value="cash">Cash</option>
-<option value="card">Card</option>
-</select>
-</div>
-<div class="form-group col-12">
-<button class="btn btn-primary" id="order_complete" type="submit">Submit</button>
-</div>
-</form>
-</div>
-</div>
-</div>
-</div>
-<div class="modal fade" id="short-cut-keys" tabindex="-1">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<h5 class="modal-title">Short cut keys</h5>
-<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
-</div>
-<div class="modal-body">
-<span>To click order : alt + O</span><br>
-<span>To click payment submit : alt + S</span><br>
-<span>To close payment submit : alt + Z</span><br>
-<span>To click cancel cart item all : alt + C</span><br>
-<span>To click add new customer : alt + A</span> <br>
-<span>To submit add new customer form : alt + N</span><br>
-<span>To click short cut keys : alt + K</span><br>
-<span>To print invoice : alt + P</span> <br>
-<span>To cancel invoice : alt + B</span> <br>
-<span>To focus search input : alt + Q</span> <br>
-<span>To click extra discount : alt + E</span> <br>
-<span>To click coupon discount : alt + D</span> <br>
-<span>To click clear cart : alt + X</span> <br>
-<span>To click new order : alt + R</span> <br>
-</div>
-</div>
-</div>
-</div>
+    @include('admin.pos.add_cart',['cart_id'=>$cart_id])
 </div>
 </div>
 </div>
@@ -539,7 +352,7 @@ Order </button>
             var unfold = new HSUnfold($(this)).init();
         });
         $.ajax({
-            url: 'https://6valley.6amtech.com/admin/pos/get-cart-ids',
+            url: '{{route('get_cart_id')}}',
             type: 'GET',
 
             dataType: 'json', // added data type
@@ -927,50 +740,57 @@ Order </button>
             cb.siblings('.addon-quantity-input').css({'visibility':'hidden'});
         }
     }
-    function quickView(product_id) {
+    // function quickView(product_id) {
+    //     $.ajax({
+    //         url: '{{ route('quick-view') }}',
+    //         type: 'GET',
+    //         data: {
+    //             product_id: product_id
+    //         },
+    //         dataType: 'json', // added data type
+    //         beforeSend: function () {
+    //             $('#loading').show();
+    //         },
+    //         success: function (data) {
+    //             console.log("success...");
+    //             console.log(data);
+
+    //             // $("#quick-view").removeClass('fade');
+    //             // $("#quick-view").addClass('show');
+
+    //             $('#quick-view').modal('show');
+    //             $('#quick-view-modal').empty().html(data.view);
+    //         },
+    //         complete: function () {
+    //             $('#loading').hide();
+    //         },
+    //     });
+    // }
+
+    function quickView(product_id)
+    {
         $.ajax({
-            url: 'https://6valley.6amtech.com/admin/pos/quick-view',
-            type: 'GET',
-            data: {
-                product_id: product_id
+            url:'{{ route('quick-view') }}',
+            type:'GET',
+            data:{
+                product_id:product_id
             },
-            dataType: 'json', // added data type
-            beforeSend: function () {
+            dataType:'json',
+            beforeSend:function()
+            {
                 $('#loading').show();
             },
             success: function (data) {
                 console.log("success...");
                 console.log(data);
 
-                // $("#quick-view").removeClass('fade');
-                // $("#quick-view").addClass('show');
+              // $("#quick-view").removeClass('fade');
+                 // $("#quick-view").addClass('show');
 
-                $('#quick-view').modal('show');
-                $('#quick-view-modal').empty().html(data.view);
-            },
-            complete: function () {
-                $('#loading').hide();
-            },
+                 $('#quick-view').modal('show');
+              $('#quick-view-modal').empty().html(data.view);
+             },
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     function checkAddToCartValidity() {
@@ -1072,7 +892,8 @@ Order </button>
     }
 
     function getVariantPrice() {
-        if ($('#add-to-cart-form input[name=quantity]').val() > 0 && checkAddToCartValidity()) {
+        if ($('#add-to-cart-form input[name=quantity]').val() > 0) {
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -1080,27 +901,28 @@ Order </button>
             });
             $.ajax({
                 type: "POST",
-                url: 'https://6valley.6amtech.com/admin/pos/variant_price',
+                url: '{{ route('pos.variant_price') }}',
                 data: $('#add-to-cart-form').serializeArray(),
                 success: function (data) {
 
+
                     $('#add-to-cart-form #chosen_price_div').removeClass('d-none');
                     $('#add-to-cart-form #chosen_price_div #chosen_price').html(data.price);
-                    $('#set-discount-amount').html(data.discount);
+                   // $('#set-discount-amount').html(data.discount);
                 }
             });
         }
     }
 
     function addToCart(form_id = 'add-to-cart-form') {
-        if (checkAddToCartValidity()) {
+  
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                 }
             });
-            $.post({
-                url: 'https://6valley.6amtech.com/admin/pos/add-to-cart',
+            $.ajax({
+                url: '{{ route('pos.add-to-cart') }}',
                 data: $('#' + form_id).serializeArray(),
                 beforeSend: function () {
                     $('#loading').show();
@@ -1137,14 +959,10 @@ Order </button>
                     $('#loading').hide();
                 }
             });
-        } else {
-            Swal.fire({
-                type: 'info',
-                title: 'Cart',
-                text: 'Please choose all the options'
-            });
-        }
+        
     }
+
+
 
     function removeFromCart(key) {
         //console.log(key);

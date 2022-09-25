@@ -104,3 +104,7 @@ Route::get('change-language/{lang}',[HomeController::class,'changeLang']);
 
 Route::resource('pos',PosController::class);
 
+Route::get('quick-view',[PosController::class,'quick_view'])->name('quick-view');
+Route::post('quick-view/variant-price',[PosController::class,'variant_price'])->name('pos.variant_price');
+Route::post('pos/add-to-cart',[PosController::class,'addToCart'])->name('pos.add-to-cart');
+Route::get('cart_id_get',[PosController::class,'get_cart_id'])->name('get_cart_id');

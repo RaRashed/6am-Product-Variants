@@ -44,7 +44,7 @@ class FrontendController extends Controller
         }
 
         $cart = session()->get('cart');
-        //dd($cart);
+        // dd($cart);
 
 
 

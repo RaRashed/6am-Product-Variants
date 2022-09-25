@@ -125,10 +125,6 @@
                         </div>
                         <div class="col-md-6">
 
-
-                            <label for="colors">
-                                Attribute :
-                                </label>
                           <div class="form-group row">
                             <div class="col-sm-9">
                                 <select class="js-example-basic-multiple-attribute form-control" name="choice_attributes[]" id="choice_attributes" multiple="multiple">
