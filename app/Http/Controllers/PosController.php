@@ -642,11 +642,13 @@ public function saveCart()
             $variant =$cartItem['variant'];
 
 
-          //  array_push($cart_keeper, $cartItem);
+        array_push($cart_keeper, $cartItem);
 
         }
     }
-    dd($variant);
+    dd($cart_keeper);
+
+
 
 
 
