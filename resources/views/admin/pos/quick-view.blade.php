@@ -147,11 +147,13 @@
                         foreach (json_decode($product->variation) as $key => $variation) {
                             $price=$variation->price;
                                 $qty += $variation->qty;
+
                             }
                         }
 
                     @endphp
-           
+
+
                 </div>
                 @foreach (json_decode($product->choice_options) as $key => $choice)
 

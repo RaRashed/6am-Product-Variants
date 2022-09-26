@@ -129,192 +129,235 @@
 
 
 </header>
-
 <main id="content" role="main" class="main pointer-event">
+    <!-- Content -->
+        <!-- ========================= SECTION CONTENT ========================= -->
+        <section class="section-content padding-y-sm bg-default mt-1">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8 card padding-y-sm ">
+                        <div class="card-header">
+                            <div class="row w-100 d-flex justify-content-between">
+                                <div class="col-sm-6 col-md-12 col-lg-5 mb-2">
+                                    <form  class="col-sm-12 col-md-12 col-lg-12">
+                                        <!-- Search -->
+                                        <div class="input-group-overlay input-group-merge input-group-flush">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <i class="tio-search"></i>
+                                                </div>
+                                            </div>
+                                            <input id="search" autocomplete="off" type="text" value="{{$keyword?$keyword:''}}"
+                                                    name="search" class="form-control search-bar-input" placeholder="Search here"
+                                                    aria-label="Search here">
+                                            <diV class="card search-card w-4" style="position: absolute;z-index: 1;width: 100%;">
+                                                <div id="search-box" class="card-body search-result-box" style="display: none;"></div>
+                                            </diV>
+                                        </div>
+                                        <!-- End Search -->
+                                    </form>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-12 col-lg-5">
+                                    <div class="input-group float-right" >
+                                        <select name="category" id="category" class="form-control js-select2-custom mx-1" title="select category" onchange="set_category_filter(this.value)">
+                                            <option value="">All Categories</option>
+                                            @foreach ($categories as $item)
+                                            <option value="{{$item->id}}" {{$category==$item->id?'selected':''}}>{{$item->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
 
+                        </div>
+                        <div class="card-body" id="items">
+                            <div class="d-flex flex-wrap mt-2 mb-3" style="justify-content: space-around;">
+                                @foreach($products as $product)
+                                    <div class="item-box">
+                                        @include('admin.pos.single_product',['product'=>$product])
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-12" style="overflow-x: scroll;">
+                                    {{-- {!!$products->withQueryString()->links()!!} --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 padding-y-sm mt-2">
+                        <div class="card pr-1 pl-1">
 
-<section class="section-content padding-y-sm bg-default mt-1">
-<div class="container-fluid">
-<div class="row">
-<div class="col-md-8 card padding-y-sm ">
-<div class="card-header">
-<div class="row w-100 d-flex justify-content-between">
-<div class="col-sm-6 col-md-12 col-lg-5 mb-2">
-<form class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="row mt-2">
+                                    <div class="form-group mt-1 col-12 w-i6">
+                                    <select onchange="customer_change(this.value);" id='customer' name="customer_id" data-placeholder="Walk In Customer" class="js-data-example-ajax form-control">
+                                        <option value="0">walking_customer</option>
+                                    </select>
+                                    {{-- <button class="btn btn-sm btn-white btn-outline-primary ml-1" type="button" title="Add Customer">
+                                        <i class="tio-add-circle text-dark"></i>
+                                    </button> --}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group mt-1 col-12 col-lg-6 mb-0">
+                                        <button class="w-100 d-inline-block btn btn-success rounded" id="add_new_customer" type="button" data-toggle="modal" data-target="#add-customer" title="Add Customer">
+                                           <i class="tio-add-circle-outlined"></i> customer
+                                        </button>
+                                    </div>
+                                    <div class="form-group mt-1 col-12 col-lg-6 mb-0">
+                                        <a class="w-100 d-inline-block btn btn-warning rounded" onclick="new_order()">
+                                           new_order
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="form-group col-12 mb-0">
+                                        <label class="input-label text-capitalize border p-1" >Current Customer : <span class="style-i4 mb-0 p-1" id="current_customer"></span></label>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="form-group mt-1 col-12 col-lg-6 mt-2 mb-0">
+                                        <select id='cart_id' name="cart_id"
+                                                class=" form-control js-select2-custom" onchange="cart_change(this.value);">
+                                        </select>
+                                    </div>
 
-<div class="input-group-overlay input-group-merge input-group-flush">
-<div class="input-group-prepend">
-<div class="input-group-text">
-<i class="tio-search"></i>
-</div>
-</div>
-<input id="search" autocomplete="off" type="text" value="" name="search" class="form-control search-bar-input" placeholder="Search here" aria-label="Search here">
-<diV class="card search-card w-4" style="position: absolute;z-index: 1;width: 100%;">
-<div id="search-box" class="card-body search-result-box" style="display: none;"></div>
-</diV>
-</div>
+                                    <div class="form-group mt-1 col-12 col-lg-6 mt-2 mb-0">
+                                        <a class="w-100 d-inline-block btn btn-danger rounded" onclick="clear_cart()">
+                                            clear_cart
+                                        </a>
+                                    </div>
+                                </div>
 
-</form>
-</div>
-<div class="col-12 col-sm-6 col-md-12 col-lg-5">
-<div class="input-group float-right">
-<select name="category" id="category" class="form-control js-select2-custom mx-1" title="select category" onchange="set_category_filter(this.value)">
-@foreach ($categories as $category )
-<option value="{{ $category->id }}">{{ $category->name }}</option>
+                            <div class='w-100' id="cart">
+                                @include('admin.pos.add_cart',['cart_id'=>$cart_id])
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- container //  -->
+        </section>
 
-@endforeach
-</select>
-</div>
-</div>
-</div>
-</div>
-<div class="card-body" id="items">
-    <div class="d-flex flex-wrap mt-2 mb-3" style="justify-content: space-around;">
-        @foreach($products as $product)
-            <div class="item-box">
-               @include('admin.pos.single_product',['product'=>$product])
+        <!-- End Content -->
+        <div class="modal fade" id="quick-view" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content" id="quick-view-modal">
+
+                </div>
             </div>
-        @endforeach
-    </div>
+        </div>
 
-</div>
-<div class="card-footer">
-<div class="row">
-<div class="col-12" style="overflow-x: scroll;">
-</div>
-</div>
-</div>
-</div>
-<div class="col-md-4 padding-y-sm mt-2">
-<div class="card pr-1 pl-1">
-<div class="row mt-2">
-<div class="form-group mt-1 col-12 w-i6">
-<select onchange="customer_change(this.value);" id='customer' name="customer_id" data-placeholder="Walk In Customer" class="js-data-example-ajax form-control">
-<option value="0">Walking customer</option>
+        {{-- @php($order=\App\Model\Order::find(session('last_order')))
+        @if($order)
+        @php(session(['last_order'=> false]))
+        <div class="modal fade" id="print-invoice" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{\App\CPU\translate('Print Invoice')}}</h5>
+                        <button id="invoice_close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body row" style="font-family: emoji;">
+                        <div class="col-md-12">
+                            <center>
+                                <input id="print_invoice" type="button" class="btn btn-primary non-printable" onclick="printDiv('printableArea')"
+                                    value="Proceed, If thermal printer is ready."/>
+                                <a href="{{url()->previous()}}" class="btn btn-danger non-printable">{{\App\CPU\translate('Back')}}</a>
+                            </center>
+                            <hr class="non-printable">
+                        </div>
+                        <div class="row" id="printableArea" style="margin: auto;">
+                            @include('admin-views.pos.order.invoice')
+                        </div>
 
-</select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif --}}
 
-</div>
-</div>
-<div class="row">
-<div class="form-group mt-1 col-12 col-lg-6 mb-0">
-<button class="w-100 d-inline-block btn btn-success rounded" id="add_new_customer" type="button" data-toggle="modal" data-target="#add-customer" title="Add Customer">
-<i class="tio-add-circle-outlined"></i> Customer
-</button>
-</div>
-<div class="form-group mt-1 col-12 col-lg-6 mb-0">
-<a class="w-100 d-inline-block btn btn-warning rounded" onclick="new_order()">
-New order
-</a>
-</div>
-</div>
-<div class="row mt-2">
-<div class="form-group col-12 mb-0">
-<label class="input-label text-capitalize border p-1">Current customer : <span class="style-i4 mb-0 p-1" id="current_customer"></span></label>
-</div>
-</div>
-<div class="row mb-2">
-<div class="form-group mt-1 col-12 col-lg-6 mt-2 mb-0">
-<select id='cart_id' name="cart_id" class=" form-control js-select2-custom" onchange="cart_change(this.value);">
-</select>
-</div>
-<div class="form-group mt-1 col-12 col-lg-6 mt-2 mb-0">
-<a class="w-100 d-inline-block btn btn-danger rounded" onclick="clear_cart()">
-Clear cart
-</a>
- </div>
-</div>
-<div class='w-100' id="cart">
-    @include('admin.pos.add_cart',['cart_id'=>$cart_id])
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
+        <div class="modal fade" id="add-customer" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">add_new_customer</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('new_customer') }}" method="post" id="product_form"
+                              >
+                            @csrf
+                                <div class="row pl-2" >
+                                    <div class="col-12 col-lg-6">
+                                        <div class="form-group">
+                                            <label class="input-label" >Name <span
+                                                    class="input-label-secondary text-danger">*</span></label>
+                                            <input type="text" name="name" class="form-control" value="{{ old('name') }}"  placeholder="Name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-6">
+                                        <div class="form-group">
+                                            <label class="input-label" >Emil <span
+                                                    class="input-label-secondary text-danger">*</span></label>
+                                            <input type="text" name="email" class="form-control" value="{{ old('email') }}"  placeholder="email" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row pl-2" >
 
-<div class="modal fade" id="quick-view" tabindex="-1">
-<div class="modal-dialog">
-<div class="modal-content" id="quick-view-modal">
-</div>
-</div>
-</div>
-<div class="modal fade" id="add-customer" tabindex="-1">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<h5 class="modal-title">Add new customer</h5>
-<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
-</div>
-<div class="modal-body">
-<form action="https://6valley.6amtech.com/admin/pos/customer-store" method="post" id="product_form">
-<input type="hidden" name="_token" value="V9jzOW25DytEFhU0W3hDDV333dNIKDXMEATx7uyE"> <div class="row pl-2">
-<div class="col-12 col-lg-6">
-<div class="form-group">
-<label class="input-label">First name <span class="input-label-secondary text-danger">*</span></label>
-<input type="text" name="f_name" class="form-control" value="" placeholder="First name" required>
-</div>
-</div>
-<div class="col-12 col-lg-6">
-<div class="form-group">
-<label class="input-label">Last name <span class="input-label-secondary text-danger">*</span></label>
-<input type="text" name="l_name" class="form-control" value="" placeholder="Last name" required>
-</div>
-</div>
-</div>
-<div class="row pl-2">
-<div class="col-12 col-lg-6">
-<div class="form-group">
-<label class="input-label">Email<span class="input-label-secondary text-danger">*</span></label>
-<input type="email" name="email" class="form-control" value="" placeholder="Ex : ex@example.com" required>
-</div>
-</div>
-<div class="col-12 col-lg-6">
-<div class="form-group">
-<label class="input-label">Phone<span class="input-label-secondary text-danger">*</span></label>
-<input type="text" name="phone" class="form-control" value="" placeholder="Phone" required>
-</div>
-</div>
-</div>
-<div class="row pl-2">
-<div class="col-12 col-lg-6">
-<div class="form-group">
-<label class="input-label">Country <span class="input-label-secondary text-danger">*</span></label>
-<input type="text" name="country" class="form-control" value="" placeholder="Country" required>
-</div>
-</div>
-<div class="col-12 col-lg-6">
-<div class="form-group">
-<label class="input-label">City <span class="input-label-secondary text-danger">*</span></label>
-<input type="text" name="city" class="form-control" value="" placeholder="City" required>
-</div>
-</div>
-<div class="col-12 col-lg-6">
-<div class="form-group">
-<label class="input-label">Zip code <span class="input-label-secondary text-danger">*</span></label>
-<input type="text" name="zip_code" class="form-control" value="" placeholder="Zip code" required>
-</div>
-</div>
-<div class="col-12 col-lg-6">
-<div class="form-group">
-<label class="input-label">Address <span class="input-label-secondary text-danger">*</span></label>
-<input type="text" name="address" class="form-control" value="" placeholder="Address" required>
-</div>
-</div>
-</div>
-<hr>
-<button type="submit" id="submit_new_customer" class="btn btn-primary">Submit</button>
-</form>
-</div>
-</div>
-</div>
-</div>
-</main>
+                                    <div class="col-12 col-lg-6">
+                                        <div class="form-group">
+                                            <label class="input-label" >phone<span
+                                                class="input-label-secondary text-danger">*</span></label>
+                                            <input type="text" name="phone" class="form-control" value="{{ old('phone') }}"  placeholder="phone" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-6">
+                                        <div class="form-group">
+                                            <label class="input-label">address <span
+                                                class="input-label-secondary text-danger">*</span></label>
+                                            <input type="text"  name="address" class="form-control" value="{{ old('address') }}"  placeholder="address" required>
+                                        </div>
+                                    </div>
 
+                                </div>
+                                <div class="row pl-2" >
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+                                    <div class="col-12 col-lg-6">
+                                        <div class="form-group">
+                                            <label class="input-label">city <span
+                                                class="input-label-secondary text-danger">*</span></label>
+                                            <input type="text"  name="city" class="form-control" value="{{ old('city') }}"  placeholder="city" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-6">
+                                        <div class="form-group">
+                                            <label class="input-label">zip code <span
+                                                class="input-label-secondary text-danger">*</span></label>
+                                            <input type="text"  name="zip_code" class="form-control" value="{{ old('zip_code') }}"  placeholder="zip code" required>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            <hr>
+                            <button type="submit" id="submit_new_customer" class="btn btn-primary">submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <!-- ========== END MAIN CONTENT ========== -->
+    <!-- JS Implementing Plugins -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
 <script src="https://6valley.6amtech.com/public/assets/back-end/js/vendor.min.js"></script>
 <script src="https://6valley.6amtech.com/public/assets/back-end/js/theme.min.js"></script>
@@ -361,7 +404,7 @@ Clear cart
                 //console.log("loding");
             },
             success: function (data) {
-                //console.log(data.cus);
+               console.log(data);
                 var output = '';
                     for(var i=0; i<data.cart_nam.length; i++) {
                         output += `<option value="${data.cart_nam[i]}" ${data.current_user==data.cart_nam[i]?'selected':''}>${data.cart_nam[i]}</option>`;
@@ -465,8 +508,9 @@ Clear cart
         //console.log(name);
         if (name.length >0) {
             $('#search-box').removeClass('d-none').show();
-            $.get({
-                url: 'https://6valley.6amtech.com/admin/pos/search-products',
+            $.ajax({
+                type:'get',
+                url: '{{ route('search-products') }}',
                 dataType: 'json',
                 data: {
                     name: name
@@ -475,7 +519,7 @@ Clear cart
                     $('#loading').removeClass('d-none');
                 },
                 success: function (data) {
-                    //console.log(data.count);
+                   console.log(data.count);
 
                     $('.search-result-box').empty().html(data.result);
                     if(data.count==1)
@@ -499,10 +543,11 @@ Clear cart
     "use strict";
     function customer_change(val) {
         //let  cart_id = $('#cart_id').val();
-        $.post({
-                url: 'https://6valley.6amtech.com/admin/pos/remove-discount',
+        $.ajax({
+            type:'post',
+                url: '{{route('remove-discount')}}',
                 data: {
-                    _token: 'V9jzOW25DytEFhU0W3hDDV333dNIKDXMEATx7uyE',
+                    _token: '{{csrf_token()}}',
                     //cart_id:cart_id,
                     user_id:val
                 },
@@ -510,7 +555,7 @@ Clear cart
                     $('#loading').removeClass('d-none');
                 },
                 success: function (data) {
-                    console.log(data);
+                   // console.log(data);
 
                     var output = '';
                     for(var i=0; i<data.cart_nam.length; i++) {
@@ -530,7 +575,7 @@ Clear cart
     "use strict";
     function clear_cart()
     {
-        let url = "https://6valley.6amtech.com/admin/pos/clear-cart-ids";
+        let url = "{{ route('clear-cart-id') }}";
         document.location.href=url;
     }
 </script>
@@ -538,7 +583,7 @@ Clear cart
     "use strict";
     function new_order()
     {
-        let url = "https://6valley.6amtech.com/admin/pos/new-cart-id";
+        let url = "{{ route('new_cart_id') }}";
         document.location.href=url;
     }
 </script>
@@ -547,7 +592,7 @@ Clear cart
     function cart_change(val)
     {
         let  cart_id = val;
-        let url = "https://6valley.6amtech.com/admin/pos/change-cart"+'/?cart_id='+val;
+        let url = "{{route('change-cart')}}"+'/?cart_id='+val;
         document.location.href=url;
     }
 </script>
@@ -915,19 +960,18 @@ Clear cart
     }
 
     function addToCart(form_id = 'add-to-cart-form') {
-  
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                 }
             });
             $.ajax({
+                type:"post",
                 url: '{{ route('pos.add-to-cart') }}',
                 data: $('#' + form_id).serializeArray(),
-                beforeSend: function () {
-                    $('#loading').show();
-                },
                 success: function (data) {
+
 
                     if (data.data == 1) {
                         Swal.fire({
@@ -959,14 +1003,15 @@ Clear cart
                     $('#loading').hide();
                 }
             });
-        
-    }
 
+    }
 
 
     function removeFromCart(key) {
         //console.log(key);
-        $.post('https://6valley.6amtech.com/admin/pos/remove-from-cart', {_token: 'V9jzOW25DytEFhU0W3hDDV333dNIKDXMEATx7uyE', key: key}, function (data) {
+        $.post('{{ route('remove-from-cart') }}',
+        {_token: '{{ csrf_token() }}', key: key},
+         function (data) {
 
             $('#cart').empty().html(data.view);
             if (data.errors) {
@@ -1023,90 +1068,89 @@ Clear cart
         $(document).on('click','input[type=number]',function(){ this.select(); });
     });
 
+ function updateQuantity(key,qty,e){
 
-    function updateQuantity(key,qty,e){
+if(qty!==""){
+    var element = $( e.target );
+    var minValue = parseInt(element.attr('min'));
+    // maxValue = parseInt(element.attr('max'));
+    var valueCurrent = parseInt(element.val());
 
-        if(qty!==""){
-            var element = $( e.target );
-            var minValue = parseInt(element.attr('min'));
-            // maxValue = parseInt(element.attr('max'));
-            var valueCurrent = parseInt(element.val());
+    //var key = element.data('key');
 
-            //var key = element.data('key');
+    $.post('{{ route('update-from-cart') }}', {_token: '{{ csrf_token() }}', key: key, quantity:qty}, function (data) {
 
-            $.post('https://6valley.6amtech.com/admin/pos/update-quantity', {_token: 'V9jzOW25DytEFhU0W3hDDV333dNIKDXMEATx7uyE', key: key, quantity:qty}, function (data) {
-
-                if(data.qty<0)
-                {
-                    toastr.warning('Product quantity is not enough!', {
-                        CloseButton: true,
-                        ProgressBar: true
-                    });
-                }
-                if(data.upQty==='zeroNegative')
-                {
-                    toastr.warning('Product quantity can not be zero or less than zero in cart!', {
-                        CloseButton: true,
-                        ProgressBar: true
-                    });
-                }
-                if(data.qty_update==1){
-                    toastr.success('Product quantity updated!', {
-                        CloseButton: true,
-                        ProgressBar: true
-                    });
-                }
-                $('#cart').empty().html(data.view);
-            });
-        }else{
-            var element = $( e.target );
-            var minValue = parseInt(element.attr('min'));
-            var valueCurrent = parseInt(element.val());
-
-            $.post('https://6valley.6amtech.com/admin/pos/update-quantity', {_token: 'V9jzOW25DytEFhU0W3hDDV333dNIKDXMEATx7uyE', key: key, quantity:minValue}, function (data) {
-
-                if(data.qty<0)
-                {
-                    toastr.warning('Product quantity is not enough!', {
-                        CloseButton: true,
-                        ProgressBar: true
-                    });
-                }
-                if(data.upQty==='zeroNegative')
-                {
-                    toastr.warning('Product quantity can not be zero or less than zero in cart!', {
-                        CloseButton: true,
-                        ProgressBar: true
-                    });
-                }
-                if(data.qty_update==1){
-                    toastr.success('Product quantity updated!', {
-                        CloseButton: true,
-                        ProgressBar: true
-                    });
-                }
-                $('#cart').empty().html(data.view);
-            });
-        }
-
-        // Allow: backspace, delete, tab, escape, enter and .
-        if(e.type == 'keydown')
+        if(data.qty<0)
         {
-            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
-                // Allow: Ctrl+A
-                (e.keyCode == 65 && e.ctrlKey === true) ||
-                // Allow: home, end, left, right
-                (e.keyCode >= 35 && e.keyCode <= 39)) {
-                // let it happen, don't do anything
-                return;
-            }
-            // Ensure that it is a number and stop the keypress
-            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-                e.preventDefault();
-            }
+            toastr.warning('product_quantity_is_not_enough!', {
+                CloseButton: true,
+                ProgressBar: true
+            });
         }
+        if(data.upQty==='zeroNegative')
+        {
+            toastr.warning('Product_quantity_can_not_be_zero_or_less_than_zero_in_cart!', {
+                CloseButton: true,
+                ProgressBar: true
+            });
+        }
+        if(data.qty_update==1){
+            toastr.success('Product_quantity_updated!', {
+                CloseButton: true,
+                ProgressBar: true
+            });
+        }
+        $('#cart').empty().html(data.view);
+    });
+}else{
+    var element = $( e.target );
+    var minValue = parseInt(element.attr('min'));
+    var valueCurrent = parseInt(element.val());
 
-    };
+    $.post('{{ route('update-from-cart') }}', {_token: '{{ csrf_token() }}', key: key, quantity:minValue}, function (data) {
+
+        if(data.qty<0)
+        {
+            toastr.warning('product_quantity_is_not_enough!', {
+                CloseButton: true,
+                ProgressBar: true
+            });
+        }
+        if(data.upQty==='zeroNegative')
+        {
+            toastr.warning('Product_quantity_can_not_be_zero_or_less_than_zero_in_cart!', {
+                CloseButton: true,
+                ProgressBar: true
+            });
+        }
+        if(data.qty_update==1){
+            toastr.success('Product_quantity_updated!', {
+                CloseButton: true,
+                ProgressBar: true
+            });
+        }
+        $('#cart').empty().html(data.view);
+    });
+}
+
+// Allow: backspace, delete, tab, escape, enter and .
+if(e.type == 'keydown')
+{
+    if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+        // Allow: Ctrl+A
+        (e.keyCode == 65 && e.ctrlKey === true) ||
+        // Allow: home, end, left, right
+        (e.keyCode >= 35 && e.keyCode <= 39)) {
+        // let it happen, don't do anything
+        return;
+    }
+    // Ensure that it is a number and stop the keypress
+    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+        e.preventDefault();
+    }
+}
+
+};
 
     // INITIALIZATION OF SELECT2
     // =======================================================
@@ -1116,7 +1160,8 @@ Clear cart
 
     $('.js-data-example-ajax').select2({
         ajax: {
-            url: 'https://6valley.6amtech.com/admin/pos/customers',
+
+            url: '{{ route('customers') }}',
             data: function (params) {
                 return {
                     q: params.term, // search term
@@ -1142,7 +1187,7 @@ Clear cart
     $('#order_place').submit(function(eventObj) {
         if($('#customer').val())
         {
-            $(this).append('<input type="hidden" name="user_id" value="'+$('#customer').val()+'" /> ');
+            $(this).append('<input type="text" name="user_id" value="'+$('#customer').val()+'" /> ');
         }
         return true;
     });

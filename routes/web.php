@@ -108,3 +108,16 @@ Route::get('quick-view',[PosController::class,'quick_view'])->name('quick-view')
 Route::post('quick-view/variant-price',[PosController::class,'variant_price'])->name('pos.variant_price');
 Route::post('pos/add-to-cart',[PosController::class,'addToCart'])->name('pos.add-to-cart');
 Route::get('cart_id_get',[PosController::class,'get_cart_id'])->name('get_cart_id');
+Route::get('new_cart_id',[PosController::class,'new_cart_id'])->name('new_cart_id');
+Route::post('remove-from-cart',[PosController::class,'removeFromCart'])->name('remove-from-cart');
+Route::post('update-from-cart',[PosController::class,'UpdateQuantity'])->name('update-from-cart');
+Route::get('change-cart',[PosController::class,'change_cart'])->name('change-cart');
+Route::get('clear-cart-id',[PosController::class,'clear_cart_id'])->name('clear-cart-id');
+Route::post('remove-discount',[PosController::class,'remove_discount'])->name('remove-discount');
+Route::post('add-new-customer',[PosController::class,'addCustomer'])->name('new_customer');
+Route::get('customers',[PosController::class,'get_customers'])->name('customers');
+Route::get('search-products',[PosController::class,'search_products'])->name('search-products');
+Route::post('order',[PosController::class,'place_order'])->name('pos.order');
+
+
+
