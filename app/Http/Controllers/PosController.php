@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Color;
+use App\Models\Cart;
 use Str;
 use Toastr;
 use DB;
@@ -630,6 +631,61 @@ if($request->has('color'))
 
 
 
+public function saveCart()
+{
+    $cart_id = session('current_user');
+    $cart = session($cart_id);
+    $cart_keeper = [];
+    if (session()->has($cart_id) && count($cart) > 0) {
+        foreach ($cart as  $cartItem) {
+            $product_id = $cartItem['id'];
+            $variant =$cartItem['variant'];
+
+
+          //  array_push($cart_keeper, $cartItem);
+
+        }
+    }
+    dd($variant);
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function place_order(Request $request)
     {
       //dd(session('current_user'));
@@ -648,7 +704,7 @@ if($request->has('color'))
                 return back();
             }
         } else {
-            Toastr::error(\App\CPU\translate('cart_empty_warning'));
+          //  Toastr::error(\App\CPU\translate('cart_empty_warning'));
             return back();
         }
 
@@ -751,7 +807,7 @@ if($request->has('color'))
 
         session()->forget($cart_id);
         session(['last_order' => $order_id]);
-        Toastr::success(\App\CPU\translate('order_placed_successfully'));
+
         return back();
     }
 

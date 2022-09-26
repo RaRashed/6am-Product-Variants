@@ -117,7 +117,7 @@ Route::post('remove-discount',[PosController::class,'remove_discount'])->name('r
 Route::post('add-new-customer',[PosController::class,'addCustomer'])->name('new_customer');
 Route::get('customers',[PosController::class,'get_customers'])->name('customers');
 Route::get('search-products',[PosController::class,'search_products'])->name('search-products');
-Route::post('order',[PosController::class,'place_order'])->name('pos.order');
+Route::post('cart-save',[PosController::class,'saveCart'])->name('cart.add');
 
 
 
