@@ -647,6 +647,16 @@ public function saveCart()
         }
     }
     dd($cart_keeper);
+    $variant=[];
+    $size=[];
+    foreach($cart_keeper as $c){
+        $variants=$c['variant'];
+        $sizes=$c['variations'];
+        array_push($variant,json_encode($variants));
+        array_push($size,json_encode($sizes));
+
+    }
+    dd($size);
 
 
 
