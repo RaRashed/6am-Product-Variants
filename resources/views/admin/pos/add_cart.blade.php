@@ -142,7 +142,7 @@
          <form action="{{ route('cart.add') }}" method="post">
             @csrf
             <button type="submit" class="btn btn-primary btn-lg btn-block" ><i class="fa fa-shopping-bag"></i>
-                Add Cart</button>
+                Order</button>
          </form>
         </div>
     </div>

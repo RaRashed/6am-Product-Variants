@@ -49,7 +49,8 @@ class PosController extends Controller
                 session()->push('cart_name', $cart_id);
             }
         }
-        //dd($cart_id);
+
+
 
         return view('admin.pos.index',compact('categories','cart_id','category','keyword','products'));
     }
@@ -609,8 +610,7 @@ if($request->has('color'))
 
 
         $count_p = $products->count();
-        //$count_p = $products->count();
-        // dd($count_p);
+
 
         if($count_p>0)
         {
@@ -634,181 +634,57 @@ if($request->has('color'))
 public function saveCart()
 {
     $cart_id = session('current_user');
-    $cart = session($cart_id);
-    $cart_keeper = [];
-    if (session()->has($cart_id) && count($cart) > 0) {
-        foreach ($cart as  $cartItem) {
-            $product_id = $cartItem['id'];
-            $variant =$cartItem['variant'];
-
-
-          //  array_push($cart_keeper, $cartItem);
-
-        }
-    }
-    dd($variant);
-
-
-
-
-
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public function place_order(Request $request)
+    $user_id = 0;
+    $user_type = 'wc';
+    if(Str::contains(session('current_user'), 'sc'))
     {
-      //dd(session('current_user'));
-        $cart_id = session('current_user');
-
-        $user_id = 0;
-        $user_type = 'wc';
-        if(Str::contains(session('current_user'), 'sc'))
+        $user_id = explode('-',session('current_user'))[1];
+        $user_type = 'sc';
+    }   if (session()->has($cart_id)) {
+        if (count(session()->get($cart_id)) < 1) {
+            return back()->with('fail', 'Cart is empty');
+        }
+    } else {
+        return back()->with('fail', 'Cart is empty');
+    }
+    $cart = session($cart_id);
+    $product_price = 0;
+    $product_subtotal = 0;
+    foreach($cart as $c)
+    {
+        if(is_array($c))
         {
-            $user_id = explode('-',session('current_user'))[1];
-            $user_type = 'sc';
-        }
-        if (session()->has($cart_id)) {
-            if (count(session()->get($cart_id)) < 1) {
-               // Toastr::error(\App\CPU\translate('cart_empty_warning'));
-                return back();
-            }
-        } else {
-          //  Toastr::error(\App\CPU\translate('cart_empty_warning'));
-            return back();
-        }
-
-        $cart = session($cart_id);
-        $total_tax_amount = 0;
-        $product_price = 0;
-        $order_details = [];
-
-        $order_id = 100000 + Order::all()->count() + 1;
-        if (Order::find($order_id)) {
-            $order_id = Order::orderBy('id', 'DESC')->first()->id + 1;
-        }
-
-        $product_subtotal = 0;
-        foreach($cart as $c)
-        {
-            if(is_array($c))
+            $product_subtotal = ($c['price']) * $c['quantity'];
+            $product = Product::find($c['id']);
+            if($product)
             {
-                $discount_on_product = 0;
-                $product_subtotal = ($c['price']) * $c['quantity'];
-                $discount_on_product += ($c['discount'] * $c['quantity']);
+                  $price = $c['price'];
+                 $details = [
 
-                $product = Product::find($c['id']);
-                if($product)
-                {
-                    $price = $c['price'];
+                    'product_id' => $c['id'],
+                    'customer_id'=>$user_id,
+                    'product_details' => $product,
+                    'qty' => $c['quantity'],
+                    'price' => $price,
+                    'variation' => $c['variations'],
+                    'variant' => $c['variant'],
+                    'variation' => json_encode($c['variations']),
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ];
 
-                    //$product = Helpers::product_data_formatting($product);
-                    $or_d = [
-                        'order_id' => $order_id,
-                        'product_id' => $c['id'],
-                        'product_details' => $product,
-                        'qty' => $c['quantity'],
-                        'price' => $price,
-                        'seller_id' => $product['user_id'],
-                        'tax' => Helpers::tax_calculation($price, $product['tax'], $product['tax_type'])*$c['quantity'],
-                        'discount' => $c['discount']*$c['quantity'],
-                        'discount_type' => 'discount_on_product',
-                        'delivery_status' => 'delivered',
-                        'payment_status' => 'paid',
-                        'variation' => $c['variations'],
-                        'variant' => $c['variant'],
-                        'variation' => json_encode($c['variations']),
-                        'created_at' => now(),
-                        'updated_at' => now()
-                    ];
-                    $total_tax_amount += $or_d['tax'] * $c['quantity'];
-                    $product_price += $product_subtotal - $discount_on_product;
-                    $order_details[] = $or_d;
 
-                    if ($c['variant'] != null) {
-                        $type = $c['variant'];
-                        $var_store = [];
-
-                        foreach (json_decode($product['variation'],true) as $var) {
-                            if ($type == $var['type']) {
-                                $var['qty'] -= $c['quantity'];
-                            }
-                            array_push($var_store, $var);
-                        }
-                        Product::where(['id' => $product['id']])->update([
-                            'variation' => json_encode($var_store),
-                        ]);
-                    }
-
-                    Product::where(['id' => $product['id']])->update([
-                        'current_stock' => $product['current_stock'] - $c['quantity']
-                    ]);
-
-                    DB::table('order_details')->insert($or_d);
-                }
+                DB::table('orders')->insert($details);
             }
         }
 
-        $total_price = $product_price;
-        if (isset($cart['ext_discount'])) {
-            $extra_discount = $cart['ext_discount_type'] == 'percent' && $cart['ext_discount'] > 0 ? (($total_price * $cart['ext_discount']) / 100) : $cart['ext_discount'];
-            $total_price -= $extra_discount;
-        }
-        $or = [
-            'id' => $order_id,
-            'customer_id' => $user_id,
-            'customer_type' => 'customer',
-            'payment_status' => 'paid',
-            'order_status' => 'delivered',
-            'seller_id' => auth('admin')->id(),
-            'seller_is' => 'admin',
-            'checked' =>1,
-            'payment_method' => $request->type,
-            'order_type' => 'POS',
-            'extra_discount' =>$cart['ext_discount']??0,
-            'extra_discount_type' => $cart['ext_discount_type']??null,
-            'order_amount' => BackEndHelper::currency_to_usd($request->amount),
-            'discount_amount' => $cart['coupon_discount']??0,
-            'coupon_code' => $cart['coupon_code']??null,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ];
-        DB::table('orders')->insertGetId($or);
+    }
+    session()->forget($cart_id);
+    return back()->with('success', 'Order Added Successfully');
 
-        session()->forget($cart_id);
-        session(['last_order' => $order_id]);
 
-        return back();
+
+
     }
 
 

@@ -170,6 +170,30 @@
                             </div>
 
                         </div>
+
+                        @if ($message = Session::get('fail'))
+                        <div class="alert alert-danger alert-block">
+
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+
+                            <strong>{{ $message }}</strong>
+
+                        </div>
+
+
+@endif
+                        @if ($message = Session::get('success'))
+                        <div class="alert alert-success alert-block">
+
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+
+                            <strong>{{ $message }}</strong>
+
+                        </div>
+
+
+
+                    @endif
                         <div class="card-body" id="items">
                             <div class="d-flex flex-wrap mt-2 mb-3" style="justify-content: space-around;">
                                 @foreach($products as $product)
@@ -203,7 +227,7 @@
                                 <div class="row">
                                     <div class="form-group mt-1 col-12 col-lg-6 mb-0">
                                         <button class="w-100 d-inline-block btn btn-success rounded" id="add_new_customer" type="button" data-toggle="modal" data-target="#add-customer" title="Add Customer">
-                                           <i class="tio-add-circle-outlined"></i> customer
+                                           <i class="fa fa-plus"></i> Add Customer
                                         </button>
                                     </div>
                                     <div class="form-group mt-1 col-12 col-lg-6 mb-0">
