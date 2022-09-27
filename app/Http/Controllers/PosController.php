@@ -634,77 +634,9 @@ if($request->has('color'))
 public function saveCart()
 {
     $cart_id = session('current_user');
-<<<<<<< HEAD
     $user_id = 0;
     $user_type = 'wc';
     if(Str::contains(session('current_user'), 'sc'))
-=======
-    $cart = session($cart_id);
-    $cart_keeper = [];
-    if (session()->has($cart_id) && count($cart) > 0) {
-        foreach ($cart as  $cartItem) {
-            $product_id = $cartItem['id'];
-            $variant =$cartItem['variant'];
-
-
-        array_push($cart_keeper, $cartItem);
-
-        }
-    }
-    dd($cart_keeper);
-    $variant=[];
-    $size=[];
-    foreach($cart_keeper as $c){
-        $variants=$c['variant'];
-        $sizes=$c['variations'];
-        array_push($variant,json_encode($variants));
-        array_push($size,json_encode($sizes));
-
-    }
-    dd($size);
-
-
-
-
-
-
-
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public function place_order(Request $request)
->>>>>>> 5cd9c34ca78c1749a91c72b18b82d4486c8078fd
     {
         $user_id = explode('-',session('current_user'))[1];
         $user_type = 'sc';
