@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -10,8 +11,21 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
+                        <div class="row mb-3">
+                            <label for="email" class="col-md-4 col-form-label text-md-end"><strong>Social Login</strong></label>
+                        <div class="col-md-6">
+                            <a href="{{ route('login.provider', 'google') }}"
+                            class="btn btn-danger mt-2">Google</a>
+                            <a href="{{ route('login.provider', 'facebook') }}"
+                            class="btn btn-success mt-2">Facebook</a>
+
+                            <a href="{{ route('login.provider', 'github') }}"
+                            class="btn btn-info mt-2">GITHUB</a>
+                        </div>
+                    </div>
 
                         <div class="row mb-3">
+
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
                             <div class="col-md-6">
@@ -62,6 +76,8 @@
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
+                            </div>
+
                             </div>
                         </div>
                     </form>

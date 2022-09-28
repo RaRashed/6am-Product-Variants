@@ -43,8 +43,10 @@ class FrontendController extends Controller
 
         }
 
+
         $cart = session()->get('cart');
-        // dd($cart);
+
+
 
 
 
@@ -56,6 +58,7 @@ class FrontendController extends Controller
             $cart[$id]['quantity']++;
 
             session()->put('cart', $cart);
+
 
             return redirect()->back()->with('success', 'Product added to cart successfully!');
 

@@ -87,7 +87,16 @@
 
 
 
+<div class="test" id="test">
+    <h2>my name is rashed</h2>
+</div>
+<button type="button" id="btest">hide</button>
+<button type="button" id="btest2">show</button>
 
+<p>Click the below button to see the result:</p>
+
+<p><a id="home" href="{{ route('brand.index') }}" title="Tutorials Point">Home</a></p>
+<button>Get Attribute</button>
 
 
 
@@ -100,7 +109,16 @@
 
 
 
-
+@section('scripts')
+<script>
+    $(document).ready(function() {
+      $("button").click(function(){
+         alert( "href = " + $("#home").data("name"));
+         alert( "Title = " + $("#home").attr("title"));
+      });
+   });
+    </script>
+@endsection
 
 
 

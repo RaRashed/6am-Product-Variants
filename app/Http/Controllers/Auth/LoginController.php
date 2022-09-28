@@ -6,7 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-
+use Str;
+use Socialite;
+use Auth;
+use App\Models\User;
+use Hash;
 class LoginController extends Controller
 {
     /*
@@ -69,7 +73,7 @@ class LoginController extends Controller
 
             }else{
 
-                return redirect()->route('home');
+                return redirect()->route('frontend');
 
             }
 
@@ -84,4 +88,39 @@ class LoginController extends Controller
 
 
     }
+
+    public function redirectToProvider($provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
+
+     public function handleProviderCallback($provider)
+    {
+        $user = Socialite::driver($provider)->stateless()->user();        // Find existing user.
+        $existingUser = User::whereEmail($user->getEmail())->first();
+
+        if ($existingUser)
+        {
+            Auth::login($existingUser);
+        } else {
+            // Create new user.
+            $getName = $user->name;
+            $newUser = User::create([
+                'name' => $user->getName(),
+                'email' => $user->getEmail(),
+                'social_id' =>$user->id,
+                'email_verified_at' => now(),
+                'password' => Hash::make(12345678),
+            ]);
+
+                      Auth::login($newUser);
+        }
+      //  Toastr::success('You have successfully logged in with '.ucfirst($provider).'!','Success');
+        return redirect(route('frontend'));
+    }
+
+
+
+
+
 }

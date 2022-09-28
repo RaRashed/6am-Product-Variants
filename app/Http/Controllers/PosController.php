@@ -140,16 +140,17 @@ class PosController extends Controller
         $quantity = 0;
         $price = 0;
 
-if($request->has('color'))
-{
+         if($request->has('color'))
+          {
 
-    $str = Color::where('code', $request['color'])->first()->name;
-}
+            $str = Color::where('code', $request['color'])->first()->name;
+         }
 
 
         foreach (json_decode(Product::find($request->id)->choice_options) as $key => $choice) {
             if ($str != null) {
                 $str .= '-' . str_replace(' ', '', $request[$choice->name]);
+
 
             }
             else {
@@ -157,21 +158,22 @@ if($request->has('color'))
             }
         }
 
+
+
         if ($str != null) {
             $count = count(json_decode($product->variation));
+
             for ($i = 0; $i < $count; $i++) {
                 if (json_decode($product->variation)[$i]->type == $str) {
-                    // $tax = Helpers::tax_calculation(json_decode($product->variation)[$i]->price, $product['tax'], $product['tax_type']);
-                    // $discount = Helpers::get_product_discount($product, json_decode($product->variation)[$i]->price);
-                    $price = json_decode($product->variation)[$i]->price ;//- $discount + $tax;
+
+                    $price = json_decode($product->variation)[$i]->price;
                     $quantity = json_decode($product->variation)[$i]->qty;
                 }
             }
         } else {
-            //$tax = Helpers::tax_calculation($product->unit_price, $product['tax'], $product['tax_type']);
-            //$discount = Helpers::get_product_discount($product, $product->unit_price);
-            $price = $product->product_price;// - $discount + $tax;
-           // $quantity = $product->current_stock;
+
+
+            $price = $product->product_price;
         }
 
         return [
@@ -189,6 +191,7 @@ if($request->has('color'))
     public function addToCart(Request $request)
     {
         $cart_id = session('current_user');
+
 
         $user_id = 0;
         $user_type = 'wc';
@@ -229,9 +232,11 @@ if($request->has('color'))
         $data['variant'] = $str;
         $cart = session($cart_id);
 
+
         if (session()->has($cart_id) && count($cart) > 0) {
 
             foreach ($cart as $key => $cartItem) {
+
                 if (is_array($cartItem) && $cartItem['id'] == $request['id'] && $cartItem['variant'] == $str) {
                     return response()->json([
                         'data' => 1,
@@ -280,8 +285,7 @@ if($request->has('color'))
         $data['quantity'] = $request['quantity'];
         $data['price'] = $price;
         $data['name'] = $product->name;
-      //  $data['discount'] = Helpers::get_product_discount($product, $price);
-        $data['image'] = $product->thumbnail;
+
 
 
         if (session()->has($cart_id)) {
@@ -443,6 +447,7 @@ if($request->has('color'))
         if (session()->has($cart_id) && count($cart) > 0) {
             foreach ($cart as $cartItem) {
                 array_push($cart_keeper, $cartItem);
+
             }
         }
         session()->put(session('current_user') , $cart_keeper);
@@ -453,7 +458,7 @@ if($request->has('color'))
             $current_customer = 'Walking Customer';
         }else{
             $current =Customer::where('id',$user_id)->first();
-            $current_customer = $current->f_name.' '.$current->l_name. ' (' .$current->phone.')';
+            $current_customer = $current->name.' '.' (' .$current->phone.')';
         }
         return response()->json([
             'current_user'=>session('current_user'),'cart_nam'=>session('cart_name')??'',
@@ -631,12 +636,12 @@ if($request->has('color'))
 
 
 
-public function saveCart()
-{
-    $cart_id = session('current_user');
-    $user_id = 0;
-    $user_type = 'wc';
-    if(Str::contains(session('current_user'), 'sc'))
+       public function saveCart()
+       {
+         $cart_id = session('current_user');
+         $user_id = 0;
+         $user_type = 'wc';
+          if(Str::contains(session('current_user'), 'sc'))
     {
         $user_id = explode('-',session('current_user'))[1];
         $user_type = 'sc';
@@ -647,6 +652,8 @@ public function saveCart()
     } else {
         return back()->with('fail', 'Cart is empty');
     }
+
+
     $cart = session($cart_id);
     $product_price = 0;
     $product_subtotal = 0;
@@ -672,8 +679,6 @@ public function saveCart()
                     'created_at' => now(),
                     'updated_at' => now()
                 ];
-
-
                 DB::table('orders')->insert($details);
             }
         }

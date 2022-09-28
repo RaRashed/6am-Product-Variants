@@ -112,15 +112,15 @@
             </dd>
         </div> --}}
 
-        <div class="col-12 d-flex justify-content-between">
+        {{-- <div class="col-12 d-flex justify-content-between">
             <dt  class="col-sm-6">coupon discount :</dt>
             <dd class="col-sm-6 text-right">
                 <button id="coupon_discount" class="btn btn-sm" type="button" data-toggle="modal" data-target="#add-coupon-discount">
-                    <i class="tio-edit"></i>
+                    <i class="fa fa-edit"></i>
                 </button>
                 {{$coupon_discount}}
             </dd>
-        </div>
+        </div> --}}
 {{--
         <div class="col-12 d-flex justify-content-between">
             <dt  class="col-sm-6">{{\App\CPU\translate('tax')}} : </dt>

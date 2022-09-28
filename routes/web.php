@@ -13,6 +13,7 @@ use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\Auth\LoginController;
 
 
 /*
@@ -74,7 +75,7 @@ Route::delete('image/{img_id}/delete',[ImageController::class,'Imagedestroy'])->
 
 
 
-route::get('/',[FrontendController::class,'index'])->name('frontend');
+route::get('/',[FrontendController::class,'index'])->name('frontend')->middleware('auth');
 route::get('cart',[FrontendController::class,'cart'])->name('cart');
 
 Route::get('add-to-cart/{id}', [FrontendController::class, 'addToCart']);
@@ -121,3 +122,28 @@ Route::post('cart-save',[PosController::class,'saveCart'])->name('cart.add');
 
 
 
+
+
+// //GITHUB ROUTES
+// Route::get('login/github',[LoginController::class,'github'])->name('github.login');
+// Route::get('login/github/redirect',[LoginController::class,'githubredirect'])->name('github.redirect');
+
+
+// //GOOGLE ROUTES
+// Route::get('login/google',[LoginController::class,'google'])->name('google.login');
+// Route::get('login/google/redirect',[LoginController::class,'googleredirect'])->name('google.redirect');
+
+// //FACEBOOK ROUTES
+// Route::get('login/facebook',[LoginController::class,'facebook'])->name('facebook.login');
+// Route::get('login/facebook/redirect',[LoginController::class,'facebookredirect'])->name('facebook.redirect');
+
+// //Twitter Routes
+// Route::get('login/twitter',[LoginController::class,'twitter'])->name('twitter.login');
+// Route::get('login/twitter/redirect',[LoginController::class,'twitterredirect'])->name('twitter.redirect');
+
+//socialite
+Route::get('/login/{provider}', [LoginController::class, 'redirectToProvider'])->name('login.provider');
+Route::get('/login/{provider}/callback', [LoginController::class, 'handleProviderCallback'])->name('login.callback');
+
+
+//Route::get('login/{provider}', [LoginController::class,'redirectToProvider'])->name('twitter.login');
