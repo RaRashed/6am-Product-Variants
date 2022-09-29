@@ -16,6 +16,8 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\NexmoSMSController;
 use App\Http\Controllers\TwilioSMSController;
+use App\Http\Controllers\PushNotificationController;
+
 
 
 
@@ -156,3 +158,12 @@ Route::get('/login/{provider}/callback', [LoginController::class, 'handleProvide
 Route::get('sms', [NexmoSMSController::class, 'sms'])->name('sms');
 Route::post('nexmoSMS', [NexmoSMSController::class, 'index'])->name('nexmoSMS');
 Route::get('twilioSMS', [TwilioSMSController::class, 'index'])->name('twilioSMS');
+
+
+
+//Push Notification
+Route::get('/notification', [PushNotificationController::class, 'index'])->name('notification');
+
+Route::post('/save-token', [PushNotificationController::class, 'saveToken'])->name('save-token');
+
+Route::post('/send-notification', [PushNotificationController::class, 'sendNotification'])->name('send.notification');

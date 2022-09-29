@@ -110,14 +110,7 @@
 
 
 @section('scripts')
-<script>
-    $(document).ready(function() {
-      $("button").click(function(){
-         alert( "href = " + $("#home").data("name"));
-         alert( "Title = " + $("#home").attr("title"));
-      });
-   });
-    </script>
+
 @endsection
 
 

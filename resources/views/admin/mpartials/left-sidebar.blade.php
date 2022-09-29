@@ -82,6 +82,12 @@
           <i class="icon-globe menu-icon"></i>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('notification') }}">
+          <span class="menu-title">Notification</span>
+          <i class="icon-globe menu-icon"></i>
+        </a>
+      </li>
 
     </ul>
   </nav>

@@ -49,7 +49,7 @@
 
 
             <button type="submit" class="btn btn-primary mr-2">Submit</button>
-            <button class="btn btn-light">Cancel</button>
+
           </form>
         </div>
       </div>
@@ -79,5 +79,29 @@
 
       </div>
     </div>
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+              <h4 class="card-title">Twilio SMS</h4>
+              <p class="card-description"> SMS System</p>
+              <form class="forms-sample" action="{{ route('twilioSMS') }}" method="get">
+                  @csrf
+                <div class="form-group">
+                  <label for="exampleInputUsername1"><strong>Message</strong></label>
+                  <input type="text" class="form-control" name="twiliosms" placeholder="Write your Message" required>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputUsername1"><strong>Number</strong></label>
+                  <input type="text" class="form-control" name="number" placeholder="Write your Message number" required>
+                </div>
+
+
+                <button type="submit" class="btn btn-primary mr-2">Submit</button>
+
+              </form>
+            </div>
+
+        </div>
+      </div>
   </div>
 @endsection
