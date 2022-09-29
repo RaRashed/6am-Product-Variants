@@ -76,6 +76,12 @@
           <i class="icon-globe menu-icon"></i>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('sms') }}">
+          <span class="menu-title">SMS</span>
+          <i class="icon-globe menu-icon"></i>
+        </a>
+      </li>
 
     </ul>
   </nav>

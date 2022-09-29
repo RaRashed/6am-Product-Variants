@@ -14,6 +14,10 @@ use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\NexmoSMSController;
+use App\Http\Controllers\TwilioSMSController;
+
+
 
 
 /*
@@ -147,3 +151,8 @@ Route::get('/login/{provider}/callback', [LoginController::class, 'handleProvide
 
 
 //Route::get('login/{provider}', [LoginController::class,'redirectToProvider'])->name('twitter.login');
+
+//SMS
+Route::get('sms', [NexmoSMSController::class, 'sms'])->name('sms');
+Route::post('nexmoSMS', [NexmoSMSController::class, 'index'])->name('nexmoSMS');
+Route::get('twilioSMS', [TwilioSMSController::class, 'index'])->name('twilioSMS');

@@ -12,15 +12,15 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end"><strong>Social Login</strong></label>
+                            <label for="email" class="col-md-4 col-form-label text-md-end mr-5"><strong>Social Login</strong></label>
                         <div class="col-md-6">
                             <a href="{{ route('login.provider', 'google') }}"
-                            class="btn btn-danger mt-2">Google</a>
+                            class="btn btn-danger btn-sm mr-3"> <i class="fa fa-google"></i> </a>
                             <a href="{{ route('login.provider', 'facebook') }}"
-                            class="btn btn-success mt-2">Facebook</a>
+                            class="btn btn-info btn-sm mr-3"> <i class="fa fa-facebook"></i> </a>
 
                             <a href="{{ route('login.provider', 'github') }}"
-                            class="btn btn-info mt-2">GITHUB</a>
+                            class="btn btn-dark btn-sm mr-3"> <i class="fa fa-github"></i></a>
                         </div>
                     </div>
 

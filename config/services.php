@@ -46,6 +46,14 @@ return [
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
         'redirect' => env('GITHUB_URL')
     ],
+    'twilio' => [
+        'account_sid' => env('TWILIO_SID'),
+        'auth_token' => env('TWILIO_TOKEN'),
+        'from' => env('TWILIO_FROM'), // optional
+    ],
+    'nexmo' => [
+        'sms_from' => 'cbfa72d7',
+    ],
 
 
 ];
