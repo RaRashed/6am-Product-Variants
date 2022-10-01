@@ -19,6 +19,7 @@ use App\Http\Controllers\TwilioSMSController;
 use App\Http\Controllers\PushNotificationController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\PayPalController;
 
 
 
@@ -179,3 +180,10 @@ Route::get('getapi',[ApiController::class, 'index']);
 //message
 Route::get('message/send',[MessageController::class, 'create'])->name('admin.message');
 Route::post('message/store',[MessageController::class, 'store'])->name('admin.message.store');
+
+//paypal
+
+Route::get('transaction', [PayPalController::class, 'transaction'])->name('transaction');
+Route::get('process-transaction', [PayPalController::class, 'processTransaction'])->name('processTransaction');
+Route::get('success-transaction', [PayPalController::class, 'successTransaction'])->name('successTransaction');
+Route::get('cancel-transaction', [PayPalController::class, 'cancelTransaction'])->name('cancelTransaction');

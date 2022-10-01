@@ -7,10 +7,10 @@ use App\Models\Message;
 
 class MessageController extends Controller
 {
-    public function __construct()
-    {
-        return $this->middleware('auth');
-    }
+    public function transaction()
+        {
+            return view('admin.paypal.transaction');
+        }
     /**
      * Display a listing of the resource.
      *

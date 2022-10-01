@@ -6,14 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\User;
 
 class PushNotificationController extends Controller
-{
-    public function __construct()
+ {
+//     public function __construct()
 
-    {
+//     {
 
-        $this->middleware('auth');
+//         $this->middleware('auth');
 
-    }
+//     }
 
 
 

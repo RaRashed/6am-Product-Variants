@@ -137,13 +137,14 @@
                     class="fa fa-times-circle "></i> Cancel </a>
         </div>
         <div class="col-md-6">
+            <a href="{{ url('transaction') }}" class="btn btn-primary btn-lg btn-block"><i class="fa fa-shopping-bag"></i>Order</a>
             {{-- <button id="submit_order" type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#paymentModal"><i class="fa fa-shopping-bag"></i>
                 Order</button> --}}
-         <form action="{{ route('cart.add') }}" method="post">
+         {{-- <form action="{{ route('cart.add') }}" method="post">
             @csrf
             <button type="submit" class="btn btn-primary btn-lg btn-block" ><i class="fa fa-shopping-bag"></i>
                 Order</button>
-         </form>
+         </form> --}}
         </div>
     </div>
 </div>
