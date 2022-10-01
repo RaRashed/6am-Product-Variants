@@ -17,6 +17,9 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\NexmoSMSController;
 use App\Http\Controllers\TwilioSMSController;
 use App\Http\Controllers\PushNotificationController;
+use App\Http\Controllers\ApiController;
+use App\Http\Controllers\MessageController;
+
 
 
 
@@ -167,3 +170,12 @@ Route::get('/notification', [PushNotificationController::class, 'index'])->name(
 Route::post('/save-token', [PushNotificationController::class, 'saveToken'])->name('save-token');
 
 Route::post('/send-notification', [PushNotificationController::class, 'sendNotification'])->name('send.notification');
+
+
+//api test
+Route::get('getapi',[ApiController::class, 'index']);
+
+
+//message
+Route::get('message/send',[MessageController::class, 'create'])->name('admin.message');
+Route::post('message/store',[MessageController::class, 'store'])->name('admin.message.store');

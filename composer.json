@@ -13,6 +13,7 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.0",
         "laravel/vonage-notification-channel": "^3.0",
+        "srmklive/paypal": "^3.0",
         "twilio/sdk": "^6.42",
         "vonage/client": "^3.0"
     },

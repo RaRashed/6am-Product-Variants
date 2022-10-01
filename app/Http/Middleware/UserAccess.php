@@ -17,7 +17,7 @@ class UserAccess
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->user()->role == 1){
+        if(auth()->user()->type == 1){
 
             return $next($request);
 
@@ -25,7 +25,7 @@ class UserAccess
 
 
 
-        return redirect('home')->with('error',"You don't have admin access.");
+        return redirect('/')->with('error',"You don't have admin access.");
 
     }
 }

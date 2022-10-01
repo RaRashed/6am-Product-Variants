@@ -136,7 +136,7 @@ class PushNotificationController extends Controller
 
 
 
-if()
+return redirect()->back();
 
     }
 }

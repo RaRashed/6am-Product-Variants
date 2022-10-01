@@ -30,13 +30,17 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contact Us</a>
+            <a class="nav-link" href="{{ route('admin.message') }}">Contact Us</a>
           </li>
         </ul>
         <div class="user_option">
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
                 @guest
+
+
+
+
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                     </li>
@@ -64,6 +68,11 @@
                         </div>
                     </li>
                 @endguest
+
+
+
+
+
             </ul>
 
           <a href="{{ route('cart') }}">
