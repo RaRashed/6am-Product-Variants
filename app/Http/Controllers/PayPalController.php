@@ -90,7 +90,7 @@ class PayPalController extends Controller
         public function cancelTransaction(Request $request)
         {
             return redirect()
-                ->route('transaction')
+                ->route('CreateTransaction')
                 ->with('error', $response['message'] ?? 'You have canceled the transaction.');
         }
     }

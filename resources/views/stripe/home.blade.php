@@ -26,7 +26,38 @@
     </style>
 </head>
 <body>
+    <?php
+    $subtotal = 0;
 
+?>
+
+    <div class="row">
+        <div class="col-md-4 order-md-2 mb-4">
+
+            <ul class="list-group mb-3">
+
+@if(session()->has($cart_id) && count( session()->get($cart_id)) > 0)
+
+@foreach(session()->get($cart_id) as $key => $cartItem)
+@if(is_array($cartItem))
+    <?php
+
+    $product_subtotal = ($cartItem['price'])*$cartItem['quantity'];
+
+    // $discount_on_product += ($cartItem['discount']*$cartItem['quantity']);
+    $subtotal += $product_subtotal;
+
+
+    //tax calculation
+    $product = \App\Models\Product::find($cartItem['id']);
+    // $total_tax += \App\CPU\Helpers::tax_calculation($cartItem['price'], $product['tax'], $product['tax_type'])*$cartItem['quantity'];
+
+    ?>
+
+
+                @endif
+                @endforeach
+            @endif
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
@@ -92,7 +123,7 @@
 
                         <div class="row">
                             <div class="col-xs-12">
-                                <button class="btn btn-danger btn-lg btn-block" type="submit">Pay Now (₹100)</button>
+                                <button class="btn btn-danger btn-lg btn-block" type="submit">{{ $subtotal }}</button>
                             </div>
                         </div>
 

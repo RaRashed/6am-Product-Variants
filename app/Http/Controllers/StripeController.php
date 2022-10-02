@@ -8,9 +8,34 @@ class StripeController extends Controller
     /**
      * payment view
      */
+
+
     public function handleGet()
     {
-        return view('stripe.home');
+
+
+       $cart_id =session('current_user');
+
+
+       $cart = session($cart_id);
+
+       $cart_keeper = [];
+
+       if (session()->has($cart_id)) {
+           foreach ($cart as $cartItem) {
+
+
+
+               array_push($cart_keeper, $cartItem);
+
+           }
+       }
+       session()->put($cart_id, $cart_keeper);
+
+
+
+
+        return view('stripe.home',['cart_id'=>$cart_id]);
     }
 
     /**
@@ -18,7 +43,12 @@ class StripeController extends Controller
      */
     public function handlePost(Request $request)
     {
+
+
+
+
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
         Stripe\Charge::create ([
                 "amount" => 100 * 150,
                 "currency" => "inr",

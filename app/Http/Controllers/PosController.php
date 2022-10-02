@@ -231,9 +231,11 @@ class PosController extends Controller
         $cart = session($cart_id);
 
 
+
         if (session()->has($cart_id) && count($cart) > 0) {
 
             foreach ($cart as $key => $cartItem) {
+
 
                 if (is_array($cartItem) && $cartItem['id'] == $request['id'] && $cartItem['variant'] == $str) {
                     return response()->json([

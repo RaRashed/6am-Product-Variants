@@ -14,6 +14,7 @@
             </tr>
         </thead>
         <tbody>
+
         <?php
             $subtotal = 0;
             $addon_price = 0;
@@ -140,13 +141,14 @@
         <div class="col-md-6">
 
             <a href="{{ url('/example1') }}" class="btn btn-primary btn-lg btn-block">Pay Now SSl</a>
+            <a href="{{ url('/stripe-payment') }}" class="btn btn-primary btn-lg btn-block">Pay Now Stripe</a>
             {{-- <button class="your-button-class" id="sslczPayBtn"
         token="if you have any token validation"
         postdata="your javascript arrays or objects which requires in backend"
         order="If you already have the transaction generated for current order"
         endpoint="/pay-via-ajax"> Pay Now SSl
 </button> --}}
-            {{-- <a href="{{ url('transaction') }}" class="btn btn-primary btn-lg btn-block"><i class="fa fa-shopping-bag"></i>Order</a> --}}
+            <a href="{{ url('transaction') }}" class="btn btn-primary btn-lg btn-block"><i class="fa fa-shopping-bag"></i>paypal</a>
             {{-- <button id="submit_order" type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#paymentModal"><i class="fa fa-shopping-bag"></i>
                 Order</button> --}}
          {{-- <form action="{{ route('cart.add') }}" method="post">

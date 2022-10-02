@@ -22,6 +22,9 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\SslCommerzPaymentController;
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\BookingController;
+
+
 
 
 
@@ -188,7 +191,7 @@ Route::post('message/store',[MessageController::class, 'store'])->name('admin.me
 
 //paypal
 
-Route::get('transaction', [PayPalController::class, 'transaction'])->name('transaction');
+Route::get('transaction', [PayPalController::class, 'transaction'])->name('createTransaction');
 Route::get('process-transaction', [PayPalController::class, 'processTransaction'])->name('processTransaction');
 Route::get('success-transaction', [PayPalController::class, 'successTransaction'])->name('successTransaction');
 Route::get('cancel-transaction', [PayPalController::class, 'cancelTransaction'])->name('cancelTransaction');
@@ -213,3 +216,11 @@ Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
 
 Route::get('/stripe-payment', [StripeController::class, 'handleGet']);
 Route::post('/stripe-payment', [StripeController::class, 'handlePost'])->name('stripe.payment');
+
+
+//Frontend Booking
+Route::get('booking',[BookingController::class, 'front_booking']);
+
+//Payments Route
+Route::get('booking/success',[BookingController::class, 'booking_payment_success']);
+Route::get('booking/fail',[BookingController::class, 'booking_payment_fail']);
