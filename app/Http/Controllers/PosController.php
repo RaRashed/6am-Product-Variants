@@ -191,8 +191,6 @@ class PosController extends Controller
     public function addToCart(Request $request)
     {
         $cart_id = session('current_user');
-
-
         $user_id = 0;
         $user_type = 'wc';
         if(Str::contains(session('current_user'), 'sc'))

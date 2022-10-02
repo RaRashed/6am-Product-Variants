@@ -88,6 +88,7 @@
     }
 
     $total_tax_amount= $total_tax;
+
 ?>
 <div class="box p-3">
     <dl class="row text-sm-right">
@@ -137,7 +138,15 @@
                     class="fa fa-times-circle "></i> Cancel </a>
         </div>
         <div class="col-md-6">
-            <a href="{{ url('transaction') }}" class="btn btn-primary btn-lg btn-block"><i class="fa fa-shopping-bag"></i>Order</a>
+
+            <a href="{{ url('/example1') }}" class="btn btn-primary btn-lg btn-block">Pay Now SSl</a>
+            {{-- <button class="your-button-class" id="sslczPayBtn"
+        token="if you have any token validation"
+        postdata="your javascript arrays or objects which requires in backend"
+        order="If you already have the transaction generated for current order"
+        endpoint="/pay-via-ajax"> Pay Now SSl
+</button> --}}
+            {{-- <a href="{{ url('transaction') }}" class="btn btn-primary btn-lg btn-block"><i class="fa fa-shopping-bag"></i>Order</a> --}}
             {{-- <button id="submit_order" type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#paymentModal"><i class="fa fa-shopping-bag"></i>
                 Order</button> --}}
          {{-- <form action="{{ route('cart.add') }}" method="post">
@@ -234,7 +243,7 @@
     </div>
 </div> --}}
 
-{{-- <div class="modal fade" id="paymentModal" tabindex="-1">
+<div class="modal fade" id="paymentModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -244,7 +253,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{route('pos.order')}}" id='order_place' method="post" class="row">
+                <form action="{{ route('processTransaction') }}" id='order_place' method="get" class="row">
                     @csrf
                     <div class="form-group col-12">
                         <label class="input-label" for="">amount</label>
@@ -252,21 +261,21 @@
                                 value="{{$total}}"
                                 readonly>
                     </div>
-                    <div class="form-group col-12">
+                    {{-- <div class="form-group col-12">
                         <label class="input-label" for="">type</label>
                         <select name="type" class="form-control">
                             <option value="cash">cash</option>
                             <option value="card">card'</option>
                         </select>
-                    </div>
+                    </div> --}}
                     <div class="form-group col-12">
-                        <button class="btn btn-primary" id="order_complete" type="submit">submit</button>
+                        <button class="btn btn-primary"type="submit">Pay</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-</div> --}}
+</div>
 {{--
 
 <div class="modal fade" id="short-cut-keys" tabindex="-1">

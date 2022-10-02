@@ -33,7 +33,7 @@ class PayPalController extends Controller
                     0 => [
                         "amount" => [
                             "currency_code" => "USD",
-                            "value" => "1000.00"
+                            "value" => $request->amount
                         ]
                     ]
                 ]
@@ -90,7 +90,7 @@ class PayPalController extends Controller
         public function cancelTransaction(Request $request)
         {
             return redirect()
-                ->route('createTransaction')
+                ->route('transaction')
                 ->with('error', $response['message'] ?? 'You have canceled the transaction.');
         }
     }
