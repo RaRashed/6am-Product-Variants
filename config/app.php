@@ -188,6 +188,8 @@ return [
          */
 
         Srmklive\PayPal\Providers\PayPalServiceProvider::class,
+        Paytabscom\Laravel_paytabs\PaypageServiceProvider::class,
+        Unicodeveloper\Paystack\PaystackServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -214,6 +216,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'PayPal' => Srmklive\PayPal\Facades\PayPal::class,
+        'Paystack' => Unicodeveloper\Paystack\Facades\Paystack::class,
     ])->toArray(),
 
 ];
