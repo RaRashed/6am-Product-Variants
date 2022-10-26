@@ -190,6 +190,8 @@ return [
         Srmklive\PayPal\Providers\PayPalServiceProvider::class,
         Paytabscom\Laravel_paytabs\PaypageServiceProvider::class,
         Unicodeveloper\Paystack\PaystackServiceProvider::class,
+        Basel\Paytabs\PaytabsServiceProvider::class,
+       LivePixel\MercadoPago\Providers\MercadoPagoServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -217,6 +219,8 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'PayPal' => Srmklive\PayPal\Facades\PayPal::class,
         'Paystack' => Unicodeveloper\Paystack\Facades\Paystack::class,
+        'MP' => LivePixel\MercadoPago\Facades\MP::class,
+        'Paytabs' => Basel\Paytabs\Facades\PaytabsFacade::class,
     ])->toArray(),
 
 ];

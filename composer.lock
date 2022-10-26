@@ -4,8 +4,58 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d85953906da67fb7c325ccb91b410ece",
+    "content-hash": "febd3bdd3569efbea5cda6b1dcc1a0d6",
     "packages": [
+        {
+            "name": "baselrabia/paytabs-with-laravel",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/baselrabia/paytabs-with-laravel.git",
+                "reference": "d4123e3e1320531afab7c24173e94743a1482772"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/baselrabia/paytabs-with-laravel/zipball/d4123e3e1320531afab7c24173e94743a1482772",
+                "reference": "d4123e3e1320531afab7c24173e94743a1482772",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Basel\\Paytabs\\PaytabsServiceProvider"
+                    ],
+                    "aliases": {
+                        "Paytabs": "Basel\\Paytabs\\Facades\\PaytabsFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Basel\\Paytabs\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "baselrabia",
+                    "email": "baselrabia@gmail.com"
+                }
+            ],
+            "description": "integrate paytabs with laravel",
+            "support": {
+                "issues": "https://github.com/baselrabia/paytabs-with-laravel/issues",
+                "source": "https://github.com/baselrabia/paytabs-with-laravel/tree/v1.1.0"
+            },
+            "time": "2021-01-27T22:59:23+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.10.2",
@@ -2188,6 +2238,50 @@
                 "source": "https://github.com/thephpleague/oauth1-client/tree/v1.10.1"
             },
             "time": "2022-04-15T14:02:14+00:00"
+        },
+        {
+            "name": "livepixel/mercado-pago",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/livepixel/mercado-pago.git",
+                "reference": "d0be19295beec4a8fb48eff9f21d7fa8da9bc115"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/livepixel/mercado-pago/zipball/d0be19295beec4a8fb48eff9f21d7fa8da9bc115",
+                "reference": "d0be19295beec4a8fb48eff9f21d7fa8da9bc115",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LivePixel\\MercadoPago\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rodrigo Maia",
+                    "email": "rodurma@gmail.com"
+                }
+            ],
+            "description": "Mercado Pago API SDK for Laravel",
+            "keywords": [
+                "mercadopago",
+                "sdk"
+            ],
+            "support": {
+                "issues": "https://github.com/livepixel/mercado-pago/issues",
+                "source": "https://github.com/livepixel/mercado-pago/tree/1.0.1"
+            },
+            "time": "2015-06-24T00:49:19+00:00"
         },
         {
             "name": "monolog/monolog",

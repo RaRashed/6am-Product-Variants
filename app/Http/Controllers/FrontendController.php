@@ -23,6 +23,7 @@ class FrontendController extends Controller
 
     public function index()
     {
+
         $products =$this->product::all();
         $convert_value=DB::table('currencies')->where('is_default',1)->first();
         //dd($convert_value);

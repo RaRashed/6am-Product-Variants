@@ -8,10 +8,27 @@
 </head>
 <body>
 
+    @if (isset($errors) && count($errors))
 
+    <ul>
+        @foreach($errors->all() as $error)
+            <li>{{ $error }} </li>
+        @endforeach
+    </ul>
+
+@endif
 
 <form method="POST" action="{{ route('pay') }}" accept-charset="UTF-8" class="form-horizontal" role="form">
-    @csrf
+
+    @if (isset($errors) && count($errors))
+
+    <ul>
+        @foreach($errors->all() as $error)
+            <li>{{ $error }} </li>
+        @endforeach
+    </ul>
+
+@endif
     <div class="row" style="margin-bottom:40px;">
         <div class="col-md-8 col-md-offset-2">
             <p>
@@ -30,6 +47,7 @@
             <input type="hidden" name="split" value="SPL_EgunGUnBeCareful">
 
 
+<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
             <p>
                 <button class="btn btn-success btn-lg btn-block" type="submit" value="Pay Now!">

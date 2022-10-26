@@ -23,8 +23,9 @@ use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\SslCommerzPaymentController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\BookingController;
-use App\Http\Controllers\PayTabController;
+use App\Http\Controllers\PaytabsController;
 use App\Http\Controllers\PayStackController;
+
 
 
 
@@ -231,7 +232,6 @@ Route::get('booking',[BookingController::class, 'front_booking']);
 Route::get('booking/success',[BookingController::class, 'booking_payment_success']);
 Route::get('booking/fail',[BookingController::class, 'booking_payment_fail']);
 
-
 Route::post('/paymentIPN', [PayTabController::class, 'paymentIPN'])->name('payment_ipn');
 
 //paystack
@@ -240,3 +240,11 @@ Route::get('/paystack', [ PayStackController::class, 'index'])->name('paystack')
 Route::post('/pay', [ PayStackController::class, 'redirectToGateway'])->name('pay');
 
 Route::get('payment/callback', [ PayStackController::class, 'handleGatewayCallback'])->name('payment');
+
+Route::get('mercado', [ MercadopagoController::class, 'index'])->name('mercado');
+
+Route::get('paypage', [ PayTabController::class, 'paypage'])->name('paypage');
+
+
+Route::get('/paytabs_payment', [PaytabsController::class,'index'])->name('Paytabs.index');
+Route::post('/paytabs_response', [PaytabsController::class,'response'])->name('Paytabs.result');
